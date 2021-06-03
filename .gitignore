@@ -1,4 +1,4 @@
 
 
 # large data sets
-data/raw/
+data/raw/*.fastq.gz
