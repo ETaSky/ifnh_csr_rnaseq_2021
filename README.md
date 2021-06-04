@@ -10,7 +10,11 @@ project
     |- data/            # raw and primary data, are not changed once created
     | |- raw/           # raw data and md5sum list, will not be altered
     | | |- fastqc/      # fastqc result for raw data
-    | |- qc/            # Trimmomatic outputs
+    | |- qc/            # quality filtered data by Trimmomatic
+    | |- reference/     # reference genomes/annotations
+    | |- STAR_mapped/   # mapping of qc data by STAR
+    |
+    |- doc/             # Documents that could be useful (e.g. Manuals)
     |
     |- logs/            # log files for analysis that would generate logs
     | |- 1/             # Parallel running trimmomatic sterr, stout for each files, only sterr is useful
@@ -24,14 +28,16 @@ conda install -c bioconda fastqc=0.11.9 trimmomatic=0.39 star=2.7.9a
 conda install -c conda-forge pigz=2.6
 ```
 
-**Packages/Softwares installed**
+**Key Resources installed**
 This section may be later moved to a requirement file
-|Package|Version|
-|:------|:------|
-|FastQC|0.11.9|
-|trimmomatic|0.39|
-|STAR|2.7.9.a|
-|pigz|2.6|
+|Resource|Version|Note|
+|:------|:------|:------|
+|FastQC|0.11.9|QC|
+|trimmomatic|0.39|QC|
+|STAR|2.7.9.a|RNA aligner|
+|pigz|2.6|Utility|
+|Mouse Genome|GENCODE M27 (05.05.21)|Ref. genome, http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M27/GRCm39.primary_assembly.genome.fa.gz|
+|Mouse Gene Annotation|GENCODE M27 (05.05.21)|GTF file, http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M27/gencode.vM27.primary_assembly.annotation.gtf.gz|
 
 ## 1. Quality checking and processing
 
@@ -82,4 +88,41 @@ cd data/qc/
 pigz -p 24 *.fastq &
 pigz -p 6 *.log &
 cd ../../
+```
+
+### Align with STAR
+#### Creating reference genome index (mouse genome)
+The reference genome for the host animal (Swiss Webster strain in this project) is downloaded from GENCODE (https://www.gencodegenes.org/mouse/). Accoding to Section 2.2.1 of STAR manual, the GENCODE files marked with PRI (primary is downloaded)
+```sh
+# Genome
+wget -P data/reference/ http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M27/GRCm39.primary_assembly.genome.fa.gz
+pigz -d data/reference/gencode.vM27.primary_assembly.annotation.gtf.gz 
+
+# Gene annotation (has to be matched with Genome)
+wget -P data/reference/ http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M27/gencode.vM27.primary_assembly.annotation.gtf.gz
+pigz -d data/reference/GRCm39.primary_assembly.genome.fa.gz 
+(RNAseqIFNH) [jingchengw@annotate ifnh_csr_rnaseq_2021]$ 
+
+# Generating genome indexes
+mkdir -p data/reference/STAR_genome_ind
+STAR --runThreadN 12 --runMode genomeGenerate --genomeDir data/reference/STAR_genome_ind --genomeFastaFiles data/reference/GRCm39.primary_assembly.genome.fa --sjdbGTFfile data/reference/gencode.vM27.primary_assembly.annotation.gtf --sjdbOverhang 149 &>logs/STAR_1_genome_index.log &
+```
+
+#### Mapping
+```sh
+# create file manifest
+awk 'BEGIN{OFS="\t"}{print "data/qc/"$1"_O1_paired.fastq.gz","data/qc/"$1"_O2_paired.fastq.gz","ID:"$1}' data/raw_filenames.txt > data/STAR_filemanifest.tsv
+
+STAR --runThreadN 24 --genomeDir data/reference/STAR_genome_ind \
+--readFilesManifest data/STAR_filemanifest.tsv \
+--readFilesCommand pigz -dc \
+--outSAMstrandField intronMotif \
+--outFilterIntronMotifs RemoveNoncanonical \
+--chimSegmentMin 30 \
+--outSAMtype BAM SortedByCoordinate \
+--outSAMunmapped Within \
+--outSAMattributes Standard \
+--outFileNamePrefix data/STAR_mapped/ \
+--limitBAMsortRAM 50000000000 \ # this parameter is important
+&>logs/STAR_2_mapping.log & 
 ```
