@@ -1,4 +1,8 @@
 
 
-# large data sets
-data/raw/*.fastq.gz
+# sequencing data
+**/*fastq.gz
+**/*fastq
+
+# trimmomatic log files
+data/qc/*.log.gz

@@ -21,6 +21,7 @@ This section is constantly updating until the final analysis is completed along 
 conda create --name RNAseqIFNH
 conda activate RNAseqIFNH
 conda install -c bioconda fastqc=0.11.9 trimmomatic=0.39 star=2.7.9a
+conda install -c conda-forge pigz=2.6
 ```
 
 **Packages/Softwares installed**
@@ -30,6 +31,7 @@ This section may be later moved to a requirement file
 |FastQC|0.11.9|
 |trimmomatic|0.39|
 |STAR|2.7.9.a|
+|pigz|2.6|
 
 ## 1. Quality checking and processing
 
@@ -74,4 +76,10 @@ done < data/raw_filenames.txt &>data/qc/length_distribution.txt &
 while IFS='' read -r line || [[ -n "$line" ]]; do \
     echo $line; grep "Input Read Pairs" logs/1/${line}/stderr;
 done < data/raw_filenames.txt &>data/qc/summary_stats.txt &
+
+# Compress QCed files since too big (pigz needs to be installed)
+cd data/qc/
+pigz -p 24 *.fastq &
+pigz -p 6 *.log &
+cd ../../
 ```

@@ -1,0 +1,6 @@
+TrimmomaticPE: Started with arguments:
+ -threads 8 -phred33 -trimlog data/qc/CSR2019-0212.log data/raw/CSR2019-0212_R1_001.fastq.gz data/raw/CSR2019-0212_R2_001.fastq.gz data/qc/CSR2019-0212_O1_paired.fastq data/qc/CSR2019-0212_O1_unpaired.fastq data/qc/CSR2019-0212_O2_paired.fastq data/qc/CSR2019-0212_O2_unpaired.fastq ILLUMINACLIP:/local/home/jingchengw/miniconda3/envs/RNAseqIFNH/share/trimmomatic/adapters/TruSeq3-PE.fa:2:30:10:2:keepBothReads LEADING:20 TRAILING:20 SLIDINGWINDOW:4:15 MINLEN:35
+Using PrefixPair: 'TACACTCTTTCCCTACACGACGCTCTTCCGATCT' and 'GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT'
+ILLUMINACLIP: Using 1 prefix pairs, 0 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Input Read Pairs: 22269477 Both Surviving: 15232826 (68.40%) Forward Only Surviving: 6818918 (30.62%) Reverse Only Surviving: 113184 (0.51%) Dropped: 104549 (0.47%)
+TrimmomaticPE: Completed successfully
