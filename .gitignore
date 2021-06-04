@@ -6,3 +6,9 @@
 
 # trimmomatic log files
 data/qc/*.log.gz
+
+# reference data (too big)
+data/reference/
+
+# STAR outputs (too big)
+data/STAR_mapped/
