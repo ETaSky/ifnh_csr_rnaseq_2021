@@ -24,7 +24,7 @@ This section is constantly updating until the final analysis is completed along 
 ```sh
 conda create --name RNAseqIFNH
 conda activate RNAseqIFNH
-conda install -c bioconda fastqc=0.11.9 trimmomatic=0.39 star=2.7.9a
+conda install -c bioconda fastqc=0.11.9 trimmomatic=0.39 star=2.7.9a Subread=2.0.1
 conda install -c conda-forge pigz=2.6
 ```
 
@@ -35,6 +35,7 @@ This section may be later moved to a requirement file
 |FastQC|0.11.9|QC|
 |trimmomatic|0.39|QC|
 |STAR|2.7.9.a|RNA aligner|
+|Subread|2.0.1|the package contains featureCounts|
 |pigz|2.6|Utility|
 |Mouse Genome|GENCODE M27 (05.05.21)|Ref. genome, http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M27/GRCm39.primary_assembly.genome.fa.gz|
 |Mouse Gene Annotation|GENCODE M27 (05.05.21)|GTF file, http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M27/gencode.vM27.primary_assembly.annotation.gtf.gz|
@@ -125,4 +126,16 @@ STAR --runThreadN 24 --genomeDir data/reference/STAR_genome_ind \
 --outFileNamePrefix data/STAR_mapped/ \
 --limitBAMsortRAM 50000000000 \ # this parameter is important
 &>logs/STAR_2_mapping.log & 
+```
+
+#### Generate feature table
+
+```sh
+featureCounts -a data/reference/gencode.vM27.primary_assembly.annotation.gtf \
+-o data/STAR_mapped/featureCounts_out \
+-s 0 \
+-p -C \
+-T 24 \
+--byReadGroup \
+data/STAR_mapped/Aligned.sortedByCoord.out.bam &>logs/featureCounts.log &
 ```
