@@ -1,0 +1,53 @@
+
+        ==========     _____ _    _ ____  _____  ______          _____  
+        =====         / ____| |  | |  _ \|  __ \|  ____|   /\   |  __ \ 
+          =====      | (___ | |  | | |_) | |__) | |__     /  \  | |  | |
+            ====      \___ \| |  | |  _ <|  _  /|  __|   / /\ \ | |  | |
+              ====    ____) | |__| | |_) | | \ \| |____ / ____ \| |__| |
+        ==========   |_____/ \____/|____/|_|  \_\______/_/    \_\_____/
+	  v2.0.1
+
+//========================== featureCounts setting ===========================\\
+||                                                                            ||
+||             Input files : 1 BAM file                                       ||
+||                           o Aligned.sortedByCoord.out.bam                  ||
+||                                                                            ||
+||             Output file : featureCounts_out                                ||
+||                 Summary : featureCounts_out.summary                        ||
+||              Annotation : gencode.vM27.primary_assembly.annotation.gtf ... ||
+||      Dir for temp files : data/STAR_mapped                                 ||
+||                                                                            ||
+||                 Threads : 24                                               ||
+||                   Level : meta-feature level                               ||
+||              Paired-end : yes                                              ||
+||      Multimapping reads : not counted                                      ||
+|| Multi-overlapping reads : not counted                                      ||
+||   Min overlapping bases : 1                                                ||
+||                                                                            ||
+||          Chimeric reads : not counted                                      ||
+||        Both ends mapped : not required                                     ||
+||                                                                            ||
+\\============================================================================//
+
+//================================= Running ==================================\\
+||                                                                            ||
+|| Load annotation file gencode.vM27.primary_assembly.annotation.gtf ...      ||
+||    Features : 842117                                                       ||
+||    Meta-features : 55416                                                   ||
+||    Chromosomes/contigs : 39                                                ||
+||                                                                            ||
+|| Process BAM file Aligned.sortedByCoord.out.bam...                          ||
+||    Paired-end reads are included.                                          ||
+||    Total read groups : 49                                                  ||
+||    Total alignments : 707413437                                            ||
+||    Successfully assigned alignments : 0 (0.0%)                             ||
+||    Running time : 79.02 minutes                                            ||
+||                                                                            ||
+|| Write the final count table.                                               ||
+|| Write the read assignment summary.                                         ||
+||                                                                            ||
+|| Summary of counting results can be found in file "data/STAR_mapped/featur  ||
+|| eCounts_out.summary"                                                       ||
+||                                                                            ||
+\\============================================================================//
+
