@@ -11,4 +11,8 @@ data/qc/*.log.gz
 data/reference/
 
 # STAR outputs (too big)
-data/STAR_mapped/
+data/mapped_STAR/
+
+# Trash files
+trash/*
+!trash/README.md
