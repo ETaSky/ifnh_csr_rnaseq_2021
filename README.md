@@ -120,22 +120,22 @@ STAR --runThreadN 24 --genomeDir data/reference/STAR_genome_ind \
 --outSAMstrandField intronMotif \
 --outFilterIntronMotifs RemoveNoncanonical \
 --chimSegmentMin 30 \
---outSAMtype BAM SortedByCoordinate \
+--outSAMtype BAM Unsorted \
 --outSAMunmapped Within \
---outSAMattributes Standard \
---outFileNamePrefix data/STAR_mapped/ \
---limitBAMsortRAM 50000000000 \ # this parameter is important
-&>logs/STAR_2_mapping.log & 
+--outSAMattributes NH HI AS nM NM MD jM jI MC ch RG \
+--outFileNamePrefix data/mapped_STAR/ \
+--limitBAMsortRAM 50000000000 &>logs/STAR_2_mapping.log & 
+
 ```
 
 #### Generate feature table
-
+Count gene using *featureCounts*, a subpackage of *Subread*. *featureCounts* may not work as expected if the bam file is not sorted by name for PE reads.
 ```sh
 featureCounts -a data/reference/gencode.vM27.primary_assembly.annotation.gtf \
--o data/STAR_mapped/featureCounts_out \
+-o data/featureCounts/featureCounts_out \
 -s 0 \
 -p -C \
 -T 24 \
 --byReadGroup \
-data/STAR_mapped/Aligned.sortedByCoord.out.bam &>logs/featureCounts.log &
+data/STAR_mapped/Aligned.out.bam &>logs/featureCounts.log &
 ```
