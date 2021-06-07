@@ -9,6 +9,7 @@ data/qc/*.log.gz
 
 # reference data (too big)
 data/reference/*
+!data/reference/README.md
 
 # STAR outputs (too big)
 data/mapped_STAR/*
