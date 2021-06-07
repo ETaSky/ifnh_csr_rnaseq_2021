@@ -18,3 +18,6 @@ data/mapped_STAR/*
 # Trash files
 trash/*
 !trash/README.md
+
+# renv created
+.Rproj.user

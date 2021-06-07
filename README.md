@@ -114,6 +114,7 @@ STAR --runThreadN 12 --runMode genomeGenerate --genomeDir data/reference/STAR_ge
 # create file manifest
 awk 'BEGIN{OFS="\t"}{print "data/qc/"$1"_O1_paired.fastq.gz","data/qc/"$1"_O2_paired.fastq.gz","ID:"$1}' data/raw_filenames.txt > data/STAR_filemanifest.tsv
 
+# for STAR almost 20 minutes per sample
 STAR --runThreadN 24 --genomeDir data/reference/STAR_genome_ind \
 --readFilesManifest data/STAR_filemanifest.tsv \
 --readFilesCommand pigz -dc \
@@ -129,7 +130,7 @@ STAR --runThreadN 24 --genomeDir data/reference/STAR_genome_ind \
 ```
 
 #### Generate feature table
-Count gene using *featureCounts*, a subpackage of *Subread*. *featureCounts* may not work as expected if the bam file is not sorted by name for PE reads.
+Count gene using *featureCounts*, a subpackage of *Subread*. *featureCounts* may not work as expected if the bam file is not sorted by name for PE reads. # This step is pretty fast.
 ```sh
 featureCounts -a data/reference/gencode.vM27.primary_assembly.annotation.gtf \
 -o data/featureCounts/featureCounts_out \
@@ -137,5 +138,5 @@ featureCounts -a data/reference/gencode.vM27.primary_assembly.annotation.gtf \
 -p -C \
 -T 24 \
 --byReadGroup \
-data/STAR_mapped/Aligned.out.bam &>logs/featureCounts.log &
+data/mapped_STAR/Aligned.out.bam &>logs/featureCounts.log &
 ```
