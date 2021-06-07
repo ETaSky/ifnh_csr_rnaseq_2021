@@ -1,0 +1,745 @@
+STAR version=2.7.9a
+STAR compilation time,server,dir=2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+##### Command Line:
+STAR --runThreadN 24 --genomeDir data/reference/STAR_genome_ind --readFilesManifest data/STAR_filemanifest.tsv --readFilesCommand pigz -dc --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --chimSegmentMin 30 --outSAMtype BAM Unsorted --outSAMunmapped Within --outSAMattributes NH HI AS nM NM MD jM jI MC ch RG --outFileNamePrefix data/mapped_STAR/ --limitBAMsortRAM 50000000000
+##### Initial USER parameters from Command Line:
+outFileNamePrefix                 data/mapped_STAR/
+###### All USER parameters from Command Line:
+runThreadN                    24     ~RE-DEFINED
+genomeDir                     data/reference/STAR_genome_ind     ~RE-DEFINED
+readFilesManifest             data/STAR_filemanifest.tsv        ~RE-DEFINED
+readFilesCommand              pigz   -dc        ~RE-DEFINED
+outSAMstrandField             intronMotif     ~RE-DEFINED
+outFilterIntronMotifs         RemoveNoncanonical     ~RE-DEFINED
+chimSegmentMin                30     ~RE-DEFINED
+outSAMtype                    BAM   Unsorted        ~RE-DEFINED
+outSAMunmapped                Within        ~RE-DEFINED
+outSAMattributes              NH   HI   AS   nM   NM   MD   jM   jI   MC   ch   RG        ~RE-DEFINED
+outFileNamePrefix             data/mapped_STAR/     ~RE-DEFINED
+limitBAMsortRAM               50000000000     ~RE-DEFINED
+##### Finished reading parameters from all sources
+
+##### Final user re-defined parameters-----------------:
+runThreadN                        24
+genomeDir                         data/reference/STAR_genome_ind
+readFilesCommand                  pigz   -dc   
+readFilesManifest                 data/STAR_filemanifest.tsv   
+limitBAMsortRAM                   50000000000
+outFileNamePrefix                 data/mapped_STAR/
+outSAMtype                        BAM   Unsorted   
+outSAMstrandField                 intronMotif
+outSAMattributes                  NH   HI   AS   nM   NM   MD   jM   jI   MC   ch   RG   
+outSAMunmapped                    Within   
+outFilterIntronMotifs             RemoveNoncanonical
+chimSegmentMin                    30
+
+-------------------------------
+##### Final effective command line:
+STAR   --runThreadN 24   --genomeDir data/reference/STAR_genome_ind   --readFilesCommand pigz   -dc      --readFilesManifest data/STAR_filemanifest.tsv      --limitBAMsortRAM 50000000000   --outFileNamePrefix data/mapped_STAR/   --outSAMtype BAM   Unsorted      --outSAMstrandField intronMotif   --outSAMattributes NH   HI   AS   nM   NM   MD   jM   jI   MC   ch   RG      --outSAMunmapped Within      --outFilterIntronMotifs RemoveNoncanonical   --chimSegmentMin 30
+----------------------------------------
+
+Reading input file names and read groups from readFileManifest data/STAR_filemanifest.tsv
+data/qc/CSR2019-0005_O1_paired.fastq.gz	data/qc/CSR2019-0005_O2_paired.fastq.gz	ID:CSR2019-0005
+data/qc/CSR2019-0008_O1_paired.fastq.gz	data/qc/CSR2019-0008_O2_paired.fastq.gz	ID:CSR2019-0008
+data/qc/CSR2019-0014_O1_paired.fastq.gz	data/qc/CSR2019-0014_O2_paired.fastq.gz	ID:CSR2019-0014
+data/qc/CSR2019-0017_O1_paired.fastq.gz	data/qc/CSR2019-0017_O2_paired.fastq.gz	ID:CSR2019-0017
+data/qc/CSR2019-0023_O1_paired.fastq.gz	data/qc/CSR2019-0023_O2_paired.fastq.gz	ID:CSR2019-0023
+data/qc/CSR2019-0032_O1_paired.fastq.gz	data/qc/CSR2019-0032_O2_paired.fastq.gz	ID:CSR2019-0032
+data/qc/CSR2019-0041_O1_paired.fastq.gz	data/qc/CSR2019-0041_O2_paired.fastq.gz	ID:CSR2019-0041
+data/qc/CSR2019-0044_O1_paired.fastq.gz	data/qc/CSR2019-0044_O2_paired.fastq.gz	ID:CSR2019-0044
+data/qc/CSR2019-0050_O1_paired.fastq.gz	data/qc/CSR2019-0050_O2_paired.fastq.gz	ID:CSR2019-0050
+data/qc/CSR2019-0053_O1_paired.fastq.gz	data/qc/CSR2019-0053_O2_paired.fastq.gz	ID:CSR2019-0053
+data/qc/CSR2019-0059_O1_paired.fastq.gz	data/qc/CSR2019-0059_O2_paired.fastq.gz	ID:CSR2019-0059
+data/qc/CSR2019-0077_O1_paired.fastq.gz	data/qc/CSR2019-0077_O2_paired.fastq.gz	ID:CSR2019-0077
+data/qc/CSR2019-0080_O1_paired.fastq.gz	data/qc/CSR2019-0080_O2_paired.fastq.gz	ID:CSR2019-0080
+data/qc/CSR2019-0089_O1_paired.fastq.gz	data/qc/CSR2019-0089_O2_paired.fastq.gz	ID:CSR2019-0089
+data/qc/CSR2019-0209_O1_paired.fastq.gz	data/qc/CSR2019-0209_O2_paired.fastq.gz	ID:CSR2019-0209
+data/qc/CSR2019-0212_O1_paired.fastq.gz	data/qc/CSR2019-0212_O2_paired.fastq.gz	ID:CSR2019-0212
+data/qc/CSR2019-0218_O1_paired.fastq.gz	data/qc/CSR2019-0218_O2_paired.fastq.gz	ID:CSR2019-0218
+data/qc/CSR2019-0221_O1_paired.fastq.gz	data/qc/CSR2019-0221_O2_paired.fastq.gz	ID:CSR2019-0221
+data/qc/CSR2019-0227_O1_paired.fastq.gz	data/qc/CSR2019-0227_O2_paired.fastq.gz	ID:CSR2019-0227
+data/qc/CSR2019-0230_O1_paired.fastq.gz	data/qc/CSR2019-0230_O2_paired.fastq.gz	ID:CSR2019-0230
+data/qc/CSR2019-0236_O1_paired.fastq.gz	data/qc/CSR2019-0236_O2_paired.fastq.gz	ID:CSR2019-0236
+data/qc/CSR2019-0239_O1_paired.fastq.gz	data/qc/CSR2019-0239_O2_paired.fastq.gz	ID:CSR2019-0239
+data/qc/CSR2019-0371_O1_paired.fastq.gz	data/qc/CSR2019-0371_O2_paired.fastq.gz	ID:CSR2019-0371
+data/qc/CSR2019-0380_O1_paired.fastq.gz	data/qc/CSR2019-0380_O2_paired.fastq.gz	ID:CSR2019-0380
+data/qc/CSR2019-0383_O1_paired.fastq.gz	data/qc/CSR2019-0383_O2_paired.fastq.gz	ID:CSR2019-0383
+data/qc/CSR2019-0389_O1_paired.fastq.gz	data/qc/CSR2019-0389_O2_paired.fastq.gz	ID:CSR2019-0389
+data/qc/CSR2019-0392_O1_paired.fastq.gz	data/qc/CSR2019-0392_O2_paired.fastq.gz	ID:CSR2019-0392
+data/qc/CSR2019-0398_O1_paired.fastq.gz	data/qc/CSR2019-0398_O2_paired.fastq.gz	ID:CSR2019-0398
+data/qc/CSR2019-0401_O1_paired.fastq.gz	data/qc/CSR2019-0401_O2_paired.fastq.gz	ID:CSR2019-0401
+data/qc/CSR2019-0407_O1_paired.fastq.gz	data/qc/CSR2019-0407_O2_paired.fastq.gz	ID:CSR2019-0407
+data/qc/CSR2019-0416_O1_paired.fastq.gz	data/qc/CSR2019-0416_O2_paired.fastq.gz	ID:CSR2019-0416
+data/qc/CSR2019-0709_O1_paired.fastq.gz	data/qc/CSR2019-0709_O2_paired.fastq.gz	ID:CSR2019-0709
+data/qc/CSR2019-0712_O1_paired.fastq.gz	data/qc/CSR2019-0712_O2_paired.fastq.gz	ID:CSR2019-0712
+data/qc/CSR2019-0718_O1_paired.fastq.gz	data/qc/CSR2019-0718_O2_paired.fastq.gz	ID:CSR2019-0718
+data/qc/CSR2019-0721_O1_paired.fastq.gz	data/qc/CSR2019-0721_O2_paired.fastq.gz	ID:CSR2019-0721
+data/qc/CSR2019-0821_O1_paired.fastq.gz	data/qc/CSR2019-0821_O2_paired.fastq.gz	ID:CSR2019-0821
+data/qc/CSR2019-0824_O1_paired.fastq.gz	data/qc/CSR2019-0824_O2_paired.fastq.gz	ID:CSR2019-0824
+data/qc/CSR2019-0830_O1_paired.fastq.gz	data/qc/CSR2019-0830_O2_paired.fastq.gz	ID:CSR2019-0830
+data/qc/CSR2019-0833_O1_paired.fastq.gz	data/qc/CSR2019-0833_O2_paired.fastq.gz	ID:CSR2019-0833
+data/qc/CSR2019-0839_O1_paired.fastq.gz	data/qc/CSR2019-0839_O2_paired.fastq.gz	ID:CSR2019-0839
+data/qc/CSR2019-0842_O1_paired.fastq.gz	data/qc/CSR2019-0842_O2_paired.fastq.gz	ID:CSR2019-0842
+data/qc/CSR2019-0848_O1_paired.fastq.gz	data/qc/CSR2019-0848_O2_paired.fastq.gz	ID:CSR2019-0848
+data/qc/CSR2019-0851_O1_paired.fastq.gz	data/qc/CSR2019-0851_O2_paired.fastq.gz	ID:CSR2019-0851
+data/qc/CSR2019-0857_O1_paired.fastq.gz	data/qc/CSR2019-0857_O2_paired.fastq.gz	ID:CSR2019-0857
+data/qc/CSR2019-0860_O1_paired.fastq.gz	data/qc/CSR2019-0860_O2_paired.fastq.gz	ID:CSR2019-0860
+data/qc/CSR2019-0911_O1_paired.fastq.gz	data/qc/CSR2019-0911_O2_paired.fastq.gz	ID:CSR2019-0911
+data/qc/CSR2019-0914_O1_paired.fastq.gz	data/qc/CSR2019-0914_O2_paired.fastq.gz	ID:CSR2019-0914
+data/qc/CSR2019-0920_O1_paired.fastq.gz	data/qc/CSR2019-0920_O2_paired.fastq.gz	ID:CSR2019-0920
+data/qc/CSR2019-0923_O1_paired.fastq.gz	data/qc/CSR2019-0923_O2_paired.fastq.gz	ID:CSR2019-0923
+Number of fastq files for each mate = 49
+
+   Input read files for mate 1 :
+-rw-rw-r--. 1 jingchengw jingchengw 919093208 Jun  3 17:16 data/qc/CSR2019-0005_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 934182923 Jun  3 17:18 data/qc/CSR2019-0008_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1000632634 Jun  3 17:20 data/qc/CSR2019-0014_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 679317140 Jun  3 17:34 data/qc/CSR2019-0017_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 929052262 Jun  3 17:40 data/qc/CSR2019-0023_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1132594846 Jun  3 17:47 data/qc/CSR2019-0032_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 715818954 Jun  3 17:49 data/qc/CSR2019-0041_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 709348739 Jun  3 17:57 data/qc/CSR2019-0044_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 766740896 Jun  3 18:04 data/qc/CSR2019-0050_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 788876230 Jun  3 18:05 data/qc/CSR2019-0053_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 962252316 Jun  3 18:18 data/qc/CSR2019-0059_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1010045763 Jun  3 18:26 data/qc/CSR2019-0077_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 970145317 Jun  3 18:24 data/qc/CSR2019-0080_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1041992768 Jun  3 18:42 data/qc/CSR2019-0089_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 915415269 Jun  3 18:44 data/qc/CSR2019-0209_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1044401674 Jun  3 18:48 data/qc/CSR2019-0212_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 980682576 Jun  3 19:11 data/qc/CSR2019-0218_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1138002727 Jun  3 19:17 data/qc/CSR2019-0221_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 990669876 Jun  3 19:17 data/qc/CSR2019-0227_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1025579457 Jun  3 19:38 data/qc/CSR2019-0230_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1077431405 Jun  3 19:45 data/qc/CSR2019-0236_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 729505347 Jun  3 19:41 data/qc/CSR2019-0239_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 863971669 Jun  3 19:59 data/qc/CSR2019-0371_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 786687165 Jun  3 20:02 data/qc/CSR2019-0380_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1042112506 Jun  3 20:09 data/qc/CSR2019-0383_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 972684008 Jun  3 20:24 data/qc/CSR2019-0389_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1050356415 Jun  3 20:29 data/qc/CSR2019-0392_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1057013212 Jun  3 20:34 data/qc/CSR2019-0398_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1008746012 Jun  3 20:46 data/qc/CSR2019-0401_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 855609165 Jun  3 20:51 data/qc/CSR2019-0407_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 962063183 Jun  3 20:56 data/qc/CSR2019-0416_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 938463046 Jun  3 21:09 data/qc/CSR2019-0709_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1029476711 Jun  3 21:23 data/qc/CSR2019-0712_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 918734441 Jun  3 21:23 data/qc/CSR2019-0718_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1065248235 Jun  3 21:34 data/qc/CSR2019-0721_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 745225449 Jun  3 21:44 data/qc/CSR2019-0821_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1144449409 Jun  3 21:52 data/qc/CSR2019-0824_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 721983943 Jun  3 21:53 data/qc/CSR2019-0830_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1028969110 Jun  3 22:13 data/qc/CSR2019-0833_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 909717369 Jun  3 22:17 data/qc/CSR2019-0839_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 747956076 Jun  3 22:15 data/qc/CSR2019-0842_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 884893244 Jun  3 22:40 data/qc/CSR2019-0848_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 913440822 Jun  3 22:41 data/qc/CSR2019-0851_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 864126440 Jun  3 22:42 data/qc/CSR2019-0857_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1070883693 Jun  3 23:11 data/qc/CSR2019-0860_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 943620297 Jun  3 23:08 data/qc/CSR2019-0911_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 999124267 Jun  3 23:11 data/qc/CSR2019-0914_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 985828211 Jun  3 23:26 data/qc/CSR2019-0920_O1_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 998448162 Jun  3 23:28 data/qc/CSR2019-0923_O1_paired.fastq.gz
+
+   readsCommandsFile:
+exec > "data/mapped_STAR/_STARtmp/tmp.fifo.read1"
+echo FILE 0
+pigz   -dc      "data/qc/CSR2019-0005_O1_paired.fastq.gz"
+echo FILE 1
+pigz   -dc      "data/qc/CSR2019-0008_O1_paired.fastq.gz"
+echo FILE 2
+pigz   -dc      "data/qc/CSR2019-0014_O1_paired.fastq.gz"
+echo FILE 3
+pigz   -dc      "data/qc/CSR2019-0017_O1_paired.fastq.gz"
+echo FILE 4
+pigz   -dc      "data/qc/CSR2019-0023_O1_paired.fastq.gz"
+echo FILE 5
+pigz   -dc      "data/qc/CSR2019-0032_O1_paired.fastq.gz"
+echo FILE 6
+pigz   -dc      "data/qc/CSR2019-0041_O1_paired.fastq.gz"
+echo FILE 7
+pigz   -dc      "data/qc/CSR2019-0044_O1_paired.fastq.gz"
+echo FILE 8
+pigz   -dc      "data/qc/CSR2019-0050_O1_paired.fastq.gz"
+echo FILE 9
+pigz   -dc      "data/qc/CSR2019-0053_O1_paired.fastq.gz"
+echo FILE 10
+pigz   -dc      "data/qc/CSR2019-0059_O1_paired.fastq.gz"
+echo FILE 11
+pigz   -dc      "data/qc/CSR2019-0077_O1_paired.fastq.gz"
+echo FILE 12
+pigz   -dc      "data/qc/CSR2019-0080_O1_paired.fastq.gz"
+echo FILE 13
+pigz   -dc      "data/qc/CSR2019-0089_O1_paired.fastq.gz"
+echo FILE 14
+pigz   -dc      "data/qc/CSR2019-0209_O1_paired.fastq.gz"
+echo FILE 15
+pigz   -dc      "data/qc/CSR2019-0212_O1_paired.fastq.gz"
+echo FILE 16
+pigz   -dc      "data/qc/CSR2019-0218_O1_paired.fastq.gz"
+echo FILE 17
+pigz   -dc      "data/qc/CSR2019-0221_O1_paired.fastq.gz"
+echo FILE 18
+pigz   -dc      "data/qc/CSR2019-0227_O1_paired.fastq.gz"
+echo FILE 19
+pigz   -dc      "data/qc/CSR2019-0230_O1_paired.fastq.gz"
+echo FILE 20
+pigz   -dc      "data/qc/CSR2019-0236_O1_paired.fastq.gz"
+echo FILE 21
+pigz   -dc      "data/qc/CSR2019-0239_O1_paired.fastq.gz"
+echo FILE 22
+pigz   -dc      "data/qc/CSR2019-0371_O1_paired.fastq.gz"
+echo FILE 23
+pigz   -dc      "data/qc/CSR2019-0380_O1_paired.fastq.gz"
+echo FILE 24
+pigz   -dc      "data/qc/CSR2019-0383_O1_paired.fastq.gz"
+echo FILE 25
+pigz   -dc      "data/qc/CSR2019-0389_O1_paired.fastq.gz"
+echo FILE 26
+pigz   -dc      "data/qc/CSR2019-0392_O1_paired.fastq.gz"
+echo FILE 27
+pigz   -dc      "data/qc/CSR2019-0398_O1_paired.fastq.gz"
+echo FILE 28
+pigz   -dc      "data/qc/CSR2019-0401_O1_paired.fastq.gz"
+echo FILE 29
+pigz   -dc      "data/qc/CSR2019-0407_O1_paired.fastq.gz"
+echo FILE 30
+pigz   -dc      "data/qc/CSR2019-0416_O1_paired.fastq.gz"
+echo FILE 31
+pigz   -dc      "data/qc/CSR2019-0709_O1_paired.fastq.gz"
+echo FILE 32
+pigz   -dc      "data/qc/CSR2019-0712_O1_paired.fastq.gz"
+echo FILE 33
+pigz   -dc      "data/qc/CSR2019-0718_O1_paired.fastq.gz"
+echo FILE 34
+pigz   -dc      "data/qc/CSR2019-0721_O1_paired.fastq.gz"
+echo FILE 35
+pigz   -dc      "data/qc/CSR2019-0821_O1_paired.fastq.gz"
+echo FILE 36
+pigz   -dc      "data/qc/CSR2019-0824_O1_paired.fastq.gz"
+echo FILE 37
+pigz   -dc      "data/qc/CSR2019-0830_O1_paired.fastq.gz"
+echo FILE 38
+pigz   -dc      "data/qc/CSR2019-0833_O1_paired.fastq.gz"
+echo FILE 39
+pigz   -dc      "data/qc/CSR2019-0839_O1_paired.fastq.gz"
+echo FILE 40
+pigz   -dc      "data/qc/CSR2019-0842_O1_paired.fastq.gz"
+echo FILE 41
+pigz   -dc      "data/qc/CSR2019-0848_O1_paired.fastq.gz"
+echo FILE 42
+pigz   -dc      "data/qc/CSR2019-0851_O1_paired.fastq.gz"
+echo FILE 43
+pigz   -dc      "data/qc/CSR2019-0857_O1_paired.fastq.gz"
+echo FILE 44
+pigz   -dc      "data/qc/CSR2019-0860_O1_paired.fastq.gz"
+echo FILE 45
+pigz   -dc      "data/qc/CSR2019-0911_O1_paired.fastq.gz"
+echo FILE 46
+pigz   -dc      "data/qc/CSR2019-0914_O1_paired.fastq.gz"
+echo FILE 47
+pigz   -dc      "data/qc/CSR2019-0920_O1_paired.fastq.gz"
+echo FILE 48
+pigz   -dc      "data/qc/CSR2019-0923_O1_paired.fastq.gz"
+
+
+   Input read files for mate 2 :
+-rw-rw-r--. 1 jingchengw jingchengw 966345139 Jun  3 17:16 data/qc/CSR2019-0005_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 978097593 Jun  3 17:18 data/qc/CSR2019-0008_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1050056814 Jun  3 17:20 data/qc/CSR2019-0014_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 707131241 Jun  3 17:34 data/qc/CSR2019-0017_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 976090582 Jun  3 17:40 data/qc/CSR2019-0023_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1191822493 Jun  3 17:47 data/qc/CSR2019-0032_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 750701206 Jun  3 17:49 data/qc/CSR2019-0041_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 738073870 Jun  3 17:57 data/qc/CSR2019-0044_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 807129361 Jun  3 18:04 data/qc/CSR2019-0050_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 821455012 Jun  3 18:05 data/qc/CSR2019-0053_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1009749061 Jun  3 18:18 data/qc/CSR2019-0059_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1058124776 Jun  3 18:26 data/qc/CSR2019-0077_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1009698825 Jun  3 18:24 data/qc/CSR2019-0080_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1105909679 Jun  3 18:42 data/qc/CSR2019-0089_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 963170005 Jun  3 18:44 data/qc/CSR2019-0209_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1106002952 Jun  3 18:48 data/qc/CSR2019-0212_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1029533232 Jun  3 19:11 data/qc/CSR2019-0218_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1204713319 Jun  3 19:17 data/qc/CSR2019-0221_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1041484041 Jun  3 19:17 data/qc/CSR2019-0227_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1090802555 Jun  3 19:38 data/qc/CSR2019-0230_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1133525621 Jun  3 19:45 data/qc/CSR2019-0236_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 772708082 Jun  3 19:41 data/qc/CSR2019-0239_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 906500986 Jun  3 19:59 data/qc/CSR2019-0371_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 828328525 Jun  3 20:02 data/qc/CSR2019-0380_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1107279053 Jun  3 20:09 data/qc/CSR2019-0383_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1020919485 Jun  3 20:24 data/qc/CSR2019-0389_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1113495147 Jun  3 20:29 data/qc/CSR2019-0392_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1108823952 Jun  3 20:34 data/qc/CSR2019-0398_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1067598833 Jun  3 20:46 data/qc/CSR2019-0401_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 903639053 Jun  3 20:51 data/qc/CSR2019-0407_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1013642239 Jun  3 20:56 data/qc/CSR2019-0416_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 989267642 Jun  3 21:09 data/qc/CSR2019-0709_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1083212926 Jun  3 21:23 data/qc/CSR2019-0712_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 970703108 Jun  3 21:23 data/qc/CSR2019-0718_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1119660610 Jun  3 21:34 data/qc/CSR2019-0721_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 784261666 Jun  3 21:44 data/qc/CSR2019-0821_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1201300018 Jun  3 21:52 data/qc/CSR2019-0824_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 762073869 Jun  3 21:53 data/qc/CSR2019-0830_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1080462738 Jun  3 22:13 data/qc/CSR2019-0833_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 957870944 Jun  3 22:17 data/qc/CSR2019-0839_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 782950208 Jun  3 22:15 data/qc/CSR2019-0842_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 930347707 Jun  3 22:40 data/qc/CSR2019-0848_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 962295656 Jun  3 22:41 data/qc/CSR2019-0851_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 901078670 Jun  3 22:42 data/qc/CSR2019-0857_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1122721971 Jun  3 23:11 data/qc/CSR2019-0860_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 982851379 Jun  3 23:08 data/qc/CSR2019-0911_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1047710615 Jun  3 23:11 data/qc/CSR2019-0914_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1027199941 Jun  3 23:26 data/qc/CSR2019-0920_O2_paired.fastq.gz
+-rw-rw-r--. 1 jingchengw jingchengw 1074618977 Jun  3 23:28 data/qc/CSR2019-0923_O2_paired.fastq.gz
+
+   readsCommandsFile:
+exec > "data/mapped_STAR/_STARtmp/tmp.fifo.read2"
+echo FILE 0
+pigz   -dc      "data/qc/CSR2019-0005_O2_paired.fastq.gz"
+echo FILE 1
+pigz   -dc      "data/qc/CSR2019-0008_O2_paired.fastq.gz"
+echo FILE 2
+pigz   -dc      "data/qc/CSR2019-0014_O2_paired.fastq.gz"
+echo FILE 3
+pigz   -dc      "data/qc/CSR2019-0017_O2_paired.fastq.gz"
+echo FILE 4
+pigz   -dc      "data/qc/CSR2019-0023_O2_paired.fastq.gz"
+echo FILE 5
+pigz   -dc      "data/qc/CSR2019-0032_O2_paired.fastq.gz"
+echo FILE 6
+pigz   -dc      "data/qc/CSR2019-0041_O2_paired.fastq.gz"
+echo FILE 7
+pigz   -dc      "data/qc/CSR2019-0044_O2_paired.fastq.gz"
+echo FILE 8
+pigz   -dc      "data/qc/CSR2019-0050_O2_paired.fastq.gz"
+echo FILE 9
+pigz   -dc      "data/qc/CSR2019-0053_O2_paired.fastq.gz"
+echo FILE 10
+pigz   -dc      "data/qc/CSR2019-0059_O2_paired.fastq.gz"
+echo FILE 11
+pigz   -dc      "data/qc/CSR2019-0077_O2_paired.fastq.gz"
+echo FILE 12
+pigz   -dc      "data/qc/CSR2019-0080_O2_paired.fastq.gz"
+echo FILE 13
+pigz   -dc      "data/qc/CSR2019-0089_O2_paired.fastq.gz"
+echo FILE 14
+pigz   -dc      "data/qc/CSR2019-0209_O2_paired.fastq.gz"
+echo FILE 15
+pigz   -dc      "data/qc/CSR2019-0212_O2_paired.fastq.gz"
+echo FILE 16
+pigz   -dc      "data/qc/CSR2019-0218_O2_paired.fastq.gz"
+echo FILE 17
+pigz   -dc      "data/qc/CSR2019-0221_O2_paired.fastq.gz"
+echo FILE 18
+pigz   -dc      "data/qc/CSR2019-0227_O2_paired.fastq.gz"
+echo FILE 19
+pigz   -dc      "data/qc/CSR2019-0230_O2_paired.fastq.gz"
+echo FILE 20
+pigz   -dc      "data/qc/CSR2019-0236_O2_paired.fastq.gz"
+echo FILE 21
+pigz   -dc      "data/qc/CSR2019-0239_O2_paired.fastq.gz"
+echo FILE 22
+pigz   -dc      "data/qc/CSR2019-0371_O2_paired.fastq.gz"
+echo FILE 23
+pigz   -dc      "data/qc/CSR2019-0380_O2_paired.fastq.gz"
+echo FILE 24
+pigz   -dc      "data/qc/CSR2019-0383_O2_paired.fastq.gz"
+echo FILE 25
+pigz   -dc      "data/qc/CSR2019-0389_O2_paired.fastq.gz"
+echo FILE 26
+pigz   -dc      "data/qc/CSR2019-0392_O2_paired.fastq.gz"
+echo FILE 27
+pigz   -dc      "data/qc/CSR2019-0398_O2_paired.fastq.gz"
+echo FILE 28
+pigz   -dc      "data/qc/CSR2019-0401_O2_paired.fastq.gz"
+echo FILE 29
+pigz   -dc      "data/qc/CSR2019-0407_O2_paired.fastq.gz"
+echo FILE 30
+pigz   -dc      "data/qc/CSR2019-0416_O2_paired.fastq.gz"
+echo FILE 31
+pigz   -dc      "data/qc/CSR2019-0709_O2_paired.fastq.gz"
+echo FILE 32
+pigz   -dc      "data/qc/CSR2019-0712_O2_paired.fastq.gz"
+echo FILE 33
+pigz   -dc      "data/qc/CSR2019-0718_O2_paired.fastq.gz"
+echo FILE 34
+pigz   -dc      "data/qc/CSR2019-0721_O2_paired.fastq.gz"
+echo FILE 35
+pigz   -dc      "data/qc/CSR2019-0821_O2_paired.fastq.gz"
+echo FILE 36
+pigz   -dc      "data/qc/CSR2019-0824_O2_paired.fastq.gz"
+echo FILE 37
+pigz   -dc      "data/qc/CSR2019-0830_O2_paired.fastq.gz"
+echo FILE 38
+pigz   -dc      "data/qc/CSR2019-0833_O2_paired.fastq.gz"
+echo FILE 39
+pigz   -dc      "data/qc/CSR2019-0839_O2_paired.fastq.gz"
+echo FILE 40
+pigz   -dc      "data/qc/CSR2019-0842_O2_paired.fastq.gz"
+echo FILE 41
+pigz   -dc      "data/qc/CSR2019-0848_O2_paired.fastq.gz"
+echo FILE 42
+pigz   -dc      "data/qc/CSR2019-0851_O2_paired.fastq.gz"
+echo FILE 43
+pigz   -dc      "data/qc/CSR2019-0857_O2_paired.fastq.gz"
+echo FILE 44
+pigz   -dc      "data/qc/CSR2019-0860_O2_paired.fastq.gz"
+echo FILE 45
+pigz   -dc      "data/qc/CSR2019-0911_O2_paired.fastq.gz"
+echo FILE 46
+pigz   -dc      "data/qc/CSR2019-0914_O2_paired.fastq.gz"
+echo FILE 47
+pigz   -dc      "data/qc/CSR2019-0920_O2_paired.fastq.gz"
+echo FILE 48
+pigz   -dc      "data/qc/CSR2019-0923_O2_paired.fastq.gz"
+
+WARNING --outSAMstrandField=intronMotif, therefore STAR will output XS attribute
+ParametersSolo: --soloCellFilterType CellRanger2.2 filtering parameters:  3000 0.99 10
+Finished loading and checking parameters
+Reading genome generation parameters:
+### STAR   --runMode genomeGenerate      --runThreadN 12   --genomeDir data/reference/STAR_genome_ind   --genomeFastaFiles data/reference/GRCm39.primary_assembly.genome.fa      --sjdbGTFfile data/reference/gencode.vM27.primary_assembly.annotation.gtf   --sjdbOverhang 149
+### GstrandBit=32
+versionGenome                 2.7.4a     ~RE-DEFINED
+genomeType                    Full     ~RE-DEFINED
+genomeFastaFiles              data/reference/GRCm39.primary_assembly.genome.fa        ~RE-DEFINED
+genomeSAindexNbases           14     ~RE-DEFINED
+genomeChrBinNbits             18     ~RE-DEFINED
+genomeSAsparseD               1     ~RE-DEFINED
+genomeTransformType           None     ~RE-DEFINED
+genomeTransformVCF            -     ~RE-DEFINED
+sjdbOverhang                  149     ~RE-DEFINED
+sjdbFileChrStartEnd           -        ~RE-DEFINED
+sjdbGTFfile                   data/reference/gencode.vM27.primary_assembly.annotation.gtf     ~RE-DEFINED
+sjdbGTFchrPrefix              -     ~RE-DEFINED
+sjdbGTFfeatureExon            exon     ~RE-DEFINED
+sjdbGTFtagExonParentTranscripttranscript_id     ~RE-DEFINED
+sjdbGTFtagExonParentGene      gene_id     ~RE-DEFINED
+sjdbInsertSave                Basic     ~RE-DEFINED
+genomeFileSizes               2823547304   22601104106        ~RE-DEFINED
+Genome version is compatible with current STAR
+Number of real (reference) chromosomes= 61
+1	chr1	195154279	0
+2	chr2	181755017	195297280
+3	chr3	159745316	377225216
+4	chr4	156860686	537133056
+5	chr5	151758149	694157312
+6	chr6	149588044	845938688
+7	chr7	144995196	995622912
+8	chr8	130127694	1140850688
+9	chr9	124359700	1271136256
+10	chr10	130530862	1395654656
+11	chr11	121973369	1526202368
+12	chr12	120092757	1648361472
+13	chr13	120883175	1768685568
+14	chr14	125139656	1889796096
+15	chr15	104073951	2015100928
+16	chr16	98008968	2119434240
+17	chr17	95294699	2217476096
+18	chr18	90720763	2312896512
+19	chr19	61420004	2403860480
+20	chrX	169476592	2465464320
+21	chrY	91455967	2635071488
+22	chrM	16299	2726559744
+23	GL456210.1	169725	2726821888
+24	GL456211.1	241735	2727084032
+25	GL456212.1	153618	2727346176
+26	GL456219.1	175968	2727608320
+27	GL456221.1	206961	2727870464
+28	GL456233.2	559103	2728132608
+29	GL456239.1	40056	2728919040
+30	GL456354.1	195993	2729181184
+31	GL456359.1	22974	2729443328
+32	GL456360.1	31704	2729705472
+33	GL456366.1	47073	2729967616
+34	GL456367.1	42057	2730229760
+35	GL456368.1	20208	2730491904
+36	GL456370.1	26764	2730754048
+37	GL456372.1	28664	2731016192
+38	GL456378.1	31602	2731278336
+39	GL456379.1	72385	2731540480
+40	GL456381.1	25871	2731802624
+41	GL456382.1	23158	2732064768
+42	GL456383.1	38659	2732326912
+43	GL456385.1	35240	2732589056
+44	GL456387.1	24685	2732851200
+45	GL456389.1	28772	2733113344
+46	GL456390.1	24668	2733375488
+47	GL456392.1	23629	2733637632
+48	GL456394.1	24323	2733899776
+49	GL456396.1	21240	2734161920
+50	JH584295.1	1976	2734424064
+51	JH584296.1	199368	2734686208
+52	JH584297.1	205776	2734948352
+53	JH584298.1	184189	2735210496
+54	JH584299.1	953012	2735472640
+55	JH584300.1	182347	2736521216
+56	JH584301.1	259875	2736783360
+57	JH584302.1	155838	2737045504
+58	JH584303.1	158099	2737307648
+59	JH584304.1	114452	2737569792
+60	MU069434.1	8412	2737831936
+61	MU069435.1	31129	2738094080
+--sjdbOverhang = 149 taken from the generated genome
+Started loading the genome: Sun Jun  6 01:32:25 2021
+
+Genome: size given as a parameter = 2823547304
+SA: size given as a parameter = 22601104106
+SAindex: size given as a parameter = 1
+Read from SAindex: pGe.gSAindexNbases=14  nSAi=357913940
+nGenome=2823547304;  nSAbyte=22601104106
+GstrandBit=32   SA number of indices=5479055540
+Shared memory is not used for genomes. Allocated a private copy of the genome.
+Genome file size: 2823547304 bytes; state: good=1 eof=0 fail=0 bad=0
+Loading Genome ... done! state: good=1 eof=0 fail=0 bad=0; loaded 2823547304 bytes
+SA file size: 22601104106 bytes; state: good=1 eof=0 fail=0 bad=0
+Loading SA ... done! state: good=1 eof=0 fail=0 bad=0; loaded 22601104106 bytes
+Loading SAindex ... done: 1565873619 bytes
+Finished loading the genome: Sun Jun  6 01:32:45 2021
+
+Processing splice junctions database sjdbN=284920,   pGe.sjdbOverhang=149 
+alignIntronMax=alignMatesGapMax=0, the max intron size will be approximately determined by (2^winBinNbits)*winAnchorDistNbins=589824
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread0 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread1 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread2 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread3 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread4 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread5 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread6 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread7 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread8 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread9 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread10 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread11 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread12 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread13 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread14 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread15 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread16 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread17 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread18 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread19 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread20 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread21 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread22 ... ok
+Opening the file: data/mapped_STAR/_STARtmp//Chimeric.out.junction.thread23 ... ok
+Created thread # 1
+Created thread # 2
+Created thread # 3
+Created thread # 4
+Created thread # 5
+Created thread # 6
+Created thread # 7
+Created thread # 8
+Created thread # 9
+Starting to map file # 0
+mate 1:   data/qc/CSR2019-0005_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0005_O2_paired.fastq.gz
+Created thread # 10
+Created thread # 11
+Created thread # 12
+Created thread # 13
+Created thread # 14
+Created thread # 15
+Created thread # 16
+Created thread # 17
+Created thread # 18
+Created thread # 19
+Created thread # 20
+Created thread # 21
+Created thread # 22
+Created thread # 23
+Starting to map file # 1
+mate 1:   data/qc/CSR2019-0008_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0008_O2_paired.fastq.gz
+Starting to map file # 2
+mate 1:   data/qc/CSR2019-0014_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0014_O2_paired.fastq.gz
+Starting to map file # 3
+mate 1:   data/qc/CSR2019-0017_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0017_O2_paired.fastq.gz
+Starting to map file # 4
+mate 1:   data/qc/CSR2019-0023_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0023_O2_paired.fastq.gz
+Starting to map file # 5
+mate 1:   data/qc/CSR2019-0032_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0032_O2_paired.fastq.gz
+Starting to map file # 6
+mate 1:   data/qc/CSR2019-0041_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0041_O2_paired.fastq.gz
+Starting to map file # 7
+mate 1:   data/qc/CSR2019-0044_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0044_O2_paired.fastq.gz
+Starting to map file # 8
+mate 1:   data/qc/CSR2019-0050_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0050_O2_paired.fastq.gz
+Starting to map file # 9
+mate 1:   data/qc/CSR2019-0053_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0053_O2_paired.fastq.gz
+Starting to map file # 10
+mate 1:   data/qc/CSR2019-0059_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0059_O2_paired.fastq.gz
+Starting to map file # 11
+mate 1:   data/qc/CSR2019-0077_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0077_O2_paired.fastq.gz
+Starting to map file # 12
+mate 1:   data/qc/CSR2019-0080_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0080_O2_paired.fastq.gz
+Starting to map file # 13
+mate 1:   data/qc/CSR2019-0089_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0089_O2_paired.fastq.gz
+Starting to map file # 14
+mate 1:   data/qc/CSR2019-0209_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0209_O2_paired.fastq.gz
+Starting to map file # 15
+mate 1:   data/qc/CSR2019-0212_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0212_O2_paired.fastq.gz
+Starting to map file # 16
+mate 1:   data/qc/CSR2019-0218_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0218_O2_paired.fastq.gz
+Starting to map file # 17
+mate 1:   data/qc/CSR2019-0221_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0221_O2_paired.fastq.gz
+Starting to map file # 18
+mate 1:   data/qc/CSR2019-0227_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0227_O2_paired.fastq.gz
+Starting to map file # 19
+mate 1:   data/qc/CSR2019-0230_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0230_O2_paired.fastq.gz
+Starting to map file # 20
+mate 1:   data/qc/CSR2019-0236_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0236_O2_paired.fastq.gz
+Starting to map file # 21
+mate 1:   data/qc/CSR2019-0239_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0239_O2_paired.fastq.gz
+Starting to map file # 22
+mate 1:   data/qc/CSR2019-0371_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0371_O2_paired.fastq.gz
+Starting to map file # 23
+mate 1:   data/qc/CSR2019-0380_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0380_O2_paired.fastq.gz
+Starting to map file # 24
+mate 1:   data/qc/CSR2019-0383_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0383_O2_paired.fastq.gz
+Starting to map file # 25
+mate 1:   data/qc/CSR2019-0389_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0389_O2_paired.fastq.gz
+Starting to map file # 26
+mate 1:   data/qc/CSR2019-0392_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0392_O2_paired.fastq.gz
+Starting to map file # 27
+mate 1:   data/qc/CSR2019-0398_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0398_O2_paired.fastq.gz
+Starting to map file # 28
+mate 1:   data/qc/CSR2019-0401_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0401_O2_paired.fastq.gz
+Starting to map file # 29
+mate 1:   data/qc/CSR2019-0407_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0407_O2_paired.fastq.gz
+Starting to map file # 30
+mate 1:   data/qc/CSR2019-0416_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0416_O2_paired.fastq.gz
+Starting to map file # 31
+mate 1:   data/qc/CSR2019-0709_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0709_O2_paired.fastq.gz
+Starting to map file # 32
+mate 1:   data/qc/CSR2019-0712_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0712_O2_paired.fastq.gz
+Starting to map file # 33
+mate 1:   data/qc/CSR2019-0718_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0718_O2_paired.fastq.gz
+Starting to map file # 34
+mate 1:   data/qc/CSR2019-0721_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0721_O2_paired.fastq.gz
+Starting to map file # 35
+mate 1:   data/qc/CSR2019-0821_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0821_O2_paired.fastq.gz
+Starting to map file # 36
+mate 1:   data/qc/CSR2019-0824_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0824_O2_paired.fastq.gz
+Starting to map file # 37
+mate 1:   data/qc/CSR2019-0830_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0830_O2_paired.fastq.gz
+Starting to map file # 38
+mate 1:   data/qc/CSR2019-0833_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0833_O2_paired.fastq.gz
+Starting to map file # 39
+mate 1:   data/qc/CSR2019-0839_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0839_O2_paired.fastq.gz
+Starting to map file # 40
+mate 1:   data/qc/CSR2019-0842_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0842_O2_paired.fastq.gz
+Starting to map file # 41
+mate 1:   data/qc/CSR2019-0848_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0848_O2_paired.fastq.gz
+Starting to map file # 42
+mate 1:   data/qc/CSR2019-0851_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0851_O2_paired.fastq.gz
+Starting to map file # 43
+mate 1:   data/qc/CSR2019-0857_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0857_O2_paired.fastq.gz
+Starting to map file # 44
+mate 1:   data/qc/CSR2019-0860_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0860_O2_paired.fastq.gz
+Starting to map file # 45
+mate 1:   data/qc/CSR2019-0911_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0911_O2_paired.fastq.gz
+Starting to map file # 46
+mate 1:   data/qc/CSR2019-0914_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0914_O2_paired.fastq.gz
+Starting to map file # 47
+mate 1:   data/qc/CSR2019-0920_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0920_O2_paired.fastq.gz
+Starting to map file # 48
+mate 1:   data/qc/CSR2019-0923_O1_paired.fastq.gz
+mate 2:   data/qc/CSR2019-0923_O2_paired.fastq.gz
+Thread #16 end of input stream, nextChar=-1
+Completed: thread #1
+Completed: thread #3
+Completed: thread #14
+Completed: thread #21
+Completed: thread #23
+Completed: thread #11
+Completed: thread #6
+Completed: thread #4
+Completed: thread #8
+Completed: thread #7
+Completed: thread #15
+Completed: thread #2
+Completed: thread #22
+Completed: thread #5
+Completed: thread #9
+Completed: thread #13
+Completed: thread #12
+Completed: thread #20
+Completed: thread #0
+Joined thread # 1
+Joined thread # 2
+Joined thread # 3
+Joined thread # 4
+Joined thread # 5
+Joined thread # 6
+Joined thread # 7
+Joined thread # 8
+Joined thread # 9
+Completed: thread #17
+Completed: thread #19
+Completed: thread #18
+Completed: thread #10
+Joined thread # 10
+Joined thread # 11
+Joined thread # 12
+Joined thread # 13
+Joined thread # 14
+Joined thread # 15
+Completed: thread #16
+Joined thread # 16
+Joined thread # 17
+Joined thread # 18
+Joined thread # 19
+Joined thread # 20
+Joined thread # 21
+Joined thread # 22
+Joined thread # 23
+ALL DONE!

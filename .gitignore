@@ -8,10 +8,12 @@
 data/qc/*.log.gz
 
 # reference data (too big)
-data/reference/
+data/reference/*
 
 # STAR outputs (too big)
-data/mapped_STAR/
+data/mapped_STAR/*
+## but keep those log files
+!data/mapped_STAR/Log*
 
 # Trash files
 trash/*
