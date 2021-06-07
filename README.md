@@ -13,6 +13,7 @@ project
     | |- qc/            # quality filtered data by Trimmomatic
     | |- reference/     # reference genomes/annotations
     | |- STAR_mapped/   # mapping of qc data by STAR
+    | |- featureCounts  # featureCounts output
     |
     |- doc/             # Documents that could be useful (e.g. Manuals)
     |
