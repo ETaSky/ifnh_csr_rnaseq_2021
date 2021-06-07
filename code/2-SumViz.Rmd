@@ -3,8 +3,187 @@ title: "2- Summarize and Visualize feature count"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r renv_setup, include = TRUE}
+#renv::init() # only run once when the project is created.
+renv::restore() # run every time when a different computer is used (practically it is Ok to run every time)
+#renv::snapshot() # run every time in the end if there are new packages installed (practically it is Ok to run every time in the end)
+```
+```{r setup, include = TRUE}
+
 knitr::opts_chunk$set(echo = TRUE)
 
-#renv::init()
+library(tidyverse)
+library(ggrepel)
 ```
+
+
+## Preparation
+1.Import featureCounts outputs
+```{sh}
+# header, copy the terminal outputs
+sed '2q;d' ../data/featureCounts/featureCounts_out | sed 's/data\/mapped_STAR\/Aligned.out.bam://g'
+```
+```{r}
+avg_fragment_len = 294 # this is from STAR output, for PE150
+# Import feature count outputs
+ft_0 <- read.table("../data/featureCounts/featureCounts_out", header = T, sep = "\t", check.names = F)
+
+ft_1 <- ft_0 %>% select(-c(Chr:Strand)) %>% pivot_longer(cols = -c(1:2), names_to = "sample_id", values_to = "raw_ct") %>% filter(raw_ct>0) %>% mutate(sample_id = gsub("data\\/mapped_STAR\\/Aligned\\.out\\.bam\\:", "", sample_id), sample_id = gsub("-", "\\.", sample_id), l_ef = pmax(0, Length - avg_fragment_len) + 1, ct_rate = raw_ct/l_ef) %>% group_by(sample_id) %>% mutate(tpm = ct_rate/sum(ct_rate)*1E6) %>% ungroup
+```
+
+2. Import metadata
+```{r}
+mt_raw <- read.table("../data/Metadata_RNAseq_06072021-jw.txt", header = T, sep = "\t")
+
+# metadata integrity check
+
+sample_id = mt_raw %>% filter(Updates=="RNASeqFinished") %>% pull(TubeID)
+intersect(sample_id, ft_1$sample_id) %>% length
+
+mt_1 <- mt_raw %>% filter(Updates=="RNASeqFinished")
+```
+
+3. Gene annotation
+```{sh}
+# Entrez gene ids
+wget -P data/reference/ http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M27/gencode.vM27.metadata.EntrezGene.gz
+# Gene symbol
+wget -P data/reference/ http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M27/gencode.vM27.metadata.MGI.gz
+
+gunzip ../data/reference/gencode.vM27.metadata.MGI.gz
+gunzip ../data/reference/gencode.vM27.metadata.EntrezGene.gz
+
+```
+```{r}
+gene_entrez = read.delim("../data/reference/gencode.vM27.metadata.EntrezGene", header = F)
+gene_symbol = read.delim("../data/reference/gencode.vM27.metadata.MGI", header = F)
+gene_tbl = merge(gene_entrez, gene_symbol, by = 1)
+head(gene_tbl)
+colnames(gene_tbl) = c("Geneid", "entrezid", "gene.symbol", "MGI")
+gene_tbl = gene_tbl %>% filter(Geneid %in% ft_0$Geneid)
+```
+
+9. Misc
+```{r}
+BM_colors = c("#377EB8", "#4DAF4A", "#E41A1C", "purple")
+names(BM_colors) = c("VF", "CSR", "CS", "VD")
+```
+
+## Differential analysis
+
+### Jun-2021-proposal
+Here we use limma package and only compare VF and CS
+```{r}
+library(limma)
+library(edgeR)
+mt_comp = mt_1 %>% filter(BirthMode %in% c("VF", "CS"))
+ft_comp = ft_1 %>% filter(sample_id %in% mt_comp$TubeID) %>% mutate(tpm_log2 = log2(tpm+3)) # create a log transformed column (add pseudo count 3 to count for low counts)
+
+ggplot(ft_comp, aes(tpm)) +
+    geom_density(aes(color = sample_id), show.legend = F) +
+    coord_cartesian(xlim = c(0,500), ylim = c(0,1))
+
+bodysites = c("Ileum", "Liver")
+plot_volcano=function(dat){
+    g = ggplot(data = dat, aes(x=logFC, y = -log10(adj.P.Val), col=diffexpressed, label=difflabel)) + 
+        geom_point() + 
+        #geom_vline(xintercept=c(-1, 1), col="red") + 
+        geom_hline(yintercept=-log10(0.1), col="red") + 
+        geom_text_repel() + 
+        scale_color_manual(values = c(No="gray70", Yes="red"), name = "differentiated\nexpressed") + 
+        labs(x = "Log2 Fold Change", y = "-log10(pValue)") + 
+        theme_minimal()
+    g
+}
+for (ss in bodysites){
+    # ss = "Ileum"
+    mt_wk = mt_comp %>% filter(BodySite==ss)
+    nsamples = nrow(mt_wk)
+    ft_wk = ft_comp %>% filter(sample_id %in% mt_wk$TubeID)
+    
+    gene_to_keep = ft_wk %>% mutate(Flag = tpm>=10) %>% group_by(Geneid) %>% summarise(N_Flag = sum(Flag)) %>% filter(N_Flag>0.2*n_samples) %>% pull(Geneid)
+
+    dat_mat = ft_wk %>% filter(Geneid %in% gene_to_keep) %>% pivot_wider(id_cols = Geneid, names_from = sample_id, values_from = tpm_log2, values_fill = log2(3)) %>% column_to_rownames(var = "Geneid")
+    
+    grps = mt_wk$BirthMode[match(colnames(dat_mat), mt_wk$TubeID)]
+
+    # dat_mat = ft_wk %>% pivot_wider(id_cols = Geneid, names_from = sample_id, values_from = raw_ct, values_fill = 0) %>% column_to_rownames(var = "Geneid")
+    # x = DGEList(counts = dat_mat, genes = ft_0[ft_0$Geneid %in% rownames(dat_mat), c("Geneid", "Length")])
+    # 
+    # grps = mt_wk$BirthMode[match(colnames(dat_mat), mt_wk$TubeID)]
+    # x$samples$group = grps
+    # 
+    # cpm <- cpm(x)
+    # lcpm <- cpm(x, log = T)
+    # 
+    # L <- mean(x$samples$lib.size) * 1e-6
+    # M <- median(x$samples$lib.size) * 1e-6
+    # c(L, M)
+    # 
+    # summary(lcpm)
+    # 
+    # keep.exprs <- filterByExpr(x, group = grps)
+    # x <- x[keep.exprs,, keep.lib.sizes=FALSE]
+    # 
+    # lcpm.cutoff <- log2(10/M + 2/L)
+    # col <- brewer.pal(nsamples, "Paired")
+    # par(mfrow=c(1,2))
+    # plot(density(lcpm[,1]), col=col[1], lwd=2, ylim=c(0,0.26), las=2, main="", xlab="")
+    # title(main="A. Raw data", xlab="Log-cpm")
+    # abline(v=lcpm.cutoff, lty=3)
+    # for (i in 2:nsamples){
+    #     den <- density(lcpm[,i])
+    #     lines(den$x, den$y, col=col[i], lwd=2)
+    # }
+    # 
+    # lcpm <- cpm(x, log=TRUE)
+    # plot(density(lcpm[,1]), col=col[1], lwd=2, ylim=c(0,0.26), las=2, main="", xlab="")
+    # title(main="B. Filtered data", xlab="Log-cpm")
+    # abline(v=lcpm.cutoff, lty=3)
+    # for (i in 2:nsamples){
+    #     den <- density(lcpm[,i])
+    #     lines(den$x, den$y, col=col[i], lwd=2)
+    # }
+    # 
+    # x <- calcNormFactors(x, method = "TMM")
+    # 
+    # lcpm <- cpm(x, log=TRUE)
+    # par(mfrow=c(1,2))
+    # 
+    # cols = BM_colors[grps]
+    # plotMDS(lcpm, labels = grps, col = cols)
+    # 
+    # design <- model.matrix(~ 0 + as.factor(grps))
+    # colnames(design) = c("CS", "VF")
+    # contrast.matrix = makeContrasts(CS-VF, levels = design)
+    # 
+    # par(mfrow=c(1,2))
+    # v <- voom(x, design, plot=TRUE)
+    # v
+    # 
+    # vfit <- lmFit(v, design)
+    # vfit <- contrasts.fit(vfit, contrasts=contrast.matrix)
+    # efit <- eBayes(vfit)
+    # plotSA(efit, main="Final model: Mean-variance trend")
+    # 
+    # summary(decideTests(efit))
+    
+    cols = BM_colors[grps]
+    plotMDS(dat_mat, labels = grps, col = cols)
+
+    design <- model.matrix(~ 0 + as.factor(grps))
+    colnames(design) = c("CS", "VF")
+    rownames(design) = colnames(dat_mat)
+    contrast.matrix = makeContrasts(CS-VF, levels = design)
+    
+    fit <- lmFit(dat_mat, design)
+    fit2 <- contrasts.fit(fit, contrasts = contrast.matrix)
+    efit <- eBayes(fit2)
+    summary(decideTests(efit, adjust.method = "fdr", p.value = 0.10))
+
+    de_gene = topTable(efit, coef = "CS - VF", adjust.method = "fdr", number = Inf) %>% rownames_to_column(var = "gene") %>% mutate(diffexpressed = ifelse(adj.P.Val<=0.1, "Yes", "No"), difflabel = ifelse(diffexpressed=="Yes", gene, NA))
+    plot_volcano(de_gene)
+
+}
+```
+
