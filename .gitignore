@@ -10,7 +10,7 @@ data/qc/*.log.gz
 # reference data (too big)
 data/reference/*
 !data/reference/README.md
-
+!data/reference/*metadata*
 # STAR outputs (too big)
 data/mapped_STAR/*
 ## but keep those log files

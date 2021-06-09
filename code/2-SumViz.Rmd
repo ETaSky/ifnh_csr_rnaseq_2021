@@ -82,6 +82,16 @@ ft_wk = ft_0 %>% select(1:5, mt_wk$TubeID)
 
 bodysites = c("Ileum", "Liver")
 
+plot_volcano=function(dat){
+    g = ggplot(data = dat, aes(x = log2FoldChange, y = -log10(padj))) + 
+        geom_point() + 
+        #geom_vline(xintercept=c(-1, 1), col="red") + 
+        geom_hline(yintercept=-log10(0.1), col="red") + 
+        #scale_color_manual(values = c(No="gray70", Yes="red"), name = "differentiated\nexpressed") + 
+        labs(x = "Log2 Fold Change", y = "-log10(adjusted pValue)") + 
+        theme_minimal()
+    g
+}
 
 for (ss in bodysites){
     # ss = "Ileum"
@@ -105,7 +115,10 @@ for (ss in bodysites){
     
     ## log fold change chrinkage (explanations see https://hbctraining.github.io/DGE_workshop/lessons/05_DGE_DESeq2_analysis2.html#:~:text=Shrunken%20log2%20foldchanges%20(LFC),High%20dispersion%20values)
     resLFC <- lfcShrink(dds_run, coef = "BirthMode_CS_vs_VF", type = "apeglm", res = res)
-    resLFC_dat <- 
+    resLFC_dat <- resLFC %>% data.frame %>% mutate(padj = ifelse(is.na(padj), 1, padj)) # explanations of NA in padj can be found https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#pvaluesNA and https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#i-want-to-benchmark-deseq2-comparing-to-other-de-tools.
+    
+    plot_volcano(resLFC_dat)
+    
 
 }
 ```
