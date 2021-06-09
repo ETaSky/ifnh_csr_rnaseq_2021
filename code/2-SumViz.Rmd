@@ -1,4 +1,4 @@
----
+y---
 title: "2- Summarize and Visualize feature count"
 output: html_document
 ---
@@ -37,7 +37,7 @@ mt_raw <- read.table("../data/Metadata_RNAseq_06072021-jw.txt", header = T, sep 
 
 # metadata integrity check
 sample_id = mt_raw %>% filter(Updates=="RNASeqFinished") %>% pull(TubeID)
-intersect(sample_id, ft_1$sample_id) %>% length
+intersect(sample_id, colnames(ft_0)) %>% length
 
 mt_0 <- mt_raw %>% filter(Updates=="RNASeqFinished")
 ```
@@ -75,6 +75,8 @@ Here we use DESeq2 package and only compare VF and CS
 ```{r}
 
 library(DESeq2)
+library(apeglm)
+
 mt_wk = mt_0 %>% filter(BirthMode %in% c("VF", "CS"))
 ft_wk = ft_0 %>% select(1:5, mt_wk$TubeID)
 
@@ -103,6 +105,7 @@ for (ss in bodysites){
     
     ## log fold change chrinkage (explanations see https://hbctraining.github.io/DGE_workshop/lessons/05_DGE_DESeq2_analysis2.html#:~:text=Shrunken%20log2%20foldchanges%20(LFC),High%20dispersion%20values)
     resLFC <- lfcShrink(dds_run, coef = "BirthMode_CS_vs_VF", type = "apeglm", res = res)
+    resLFC_dat <- 
 
 }
 ```
