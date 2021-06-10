@@ -44,22 +44,21 @@ mt_0 <- mt_raw %>% filter(Updates=="RNASeqFinished")
 
 3. Gene annotation
 ```{sh}
-# Entrez gene ids
-wget -P data/reference/ http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M27/gencode.vM27.metadata.EntrezGene.gz
-# Gene symbol
-wget -P data/reference/ http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M27/gencode.vM27.metadata.MGI.gz
-
-gunzip ../data/reference/gencode.vM27.metadata.MGI.gz
-gunzip ../data/reference/gencode.vM27.metadata.EntrezGene.gz
-
+# extract gene information from the gtf file
+awk -F"\t" '{if($3=="gene"){print $9}}' gencode.vM27.primary_assembly.annotation.gtf > gencode.vM27.metadata.primary_assembly.annotation.col9
 ```
 ```{r}
-gene_entrez = read.delim("../data/reference/gencode.vM27.metadata.EntrezGene", header = F)
-gene_symbol = read.delim("../data/reference/gencode.vM27.metadata.MGI", header = F)
-gene_tbl = merge(gene_entrez, gene_symbol, by = 1)
-head(gene_tbl)
-colnames(gene_tbl) = c("Geneid", "entrezid", "gene.symbol", "MGI")
-gene_tbl = gene_tbl %>% filter(Geneid %in% ft_0$Geneid)
+gene_fixer <- function(str){
+    str = str[str != ""]
+    str_ = str %>% str_split(., " ", simplify = T)
+    str_[, 2] = gsub("\"|;$", "", str_[, 2])
+    str_o = t(str_[, 2]) %>% as.data.frame()
+    colnames(str_o) = str_[, 1]
+    str_o = as_tibble(str_o, .name_repair = function(x){make.names(x, unique = T)})
+    return(str_o)
+}
+gene_raw = data.frame(raw = readLines("../data/reference/gencode.vM27.metadata.primary_assembly.annotation.col9"))
+gene_tbl = gene_raw$raw %>% str_split(., "; +", simplify = T) %>% split(., seq(nrow(.))) %>% lapply(., "gene_fixer") %>% data.table::rbindlist(use.names = T, fill = T)
 ```
 
 9. Misc
@@ -82,12 +81,11 @@ ft_wk = ft_0 %>% select(1:5, mt_wk$TubeID)
 
 bodysites = c("Ileum", "Liver")
 
-plot_volcano=function(dat){
-    g = ggplot(data = dat, aes(x = log2FoldChange, y = -log10(padj))) + 
-        geom_point() + 
+plot_volcano=function(dat, x = "log2FoldChange", y = "padj", color = "isDE", size = "baseMean"){
+    g = ggplot(data = dat, aes(x = .data[[x]], y = -log10(.data[[y]]), color = .data[[color]])) + 
+        geom_point(aes(size = .data[[size]])) + 
         #geom_vline(xintercept=c(-1, 1), col="red") + 
-        geom_hline(yintercept=-log10(0.1), col="red") + 
-        #scale_color_manual(values = c(No="gray70", Yes="red"), name = "differentiated\nexpressed") + 
+        geom_hline(yintercept=-log10(0.1), col="red") +
         labs(x = "Log2 Fold Change", y = "-log10(adjusted pValue)") + 
         theme_minimal()
     g
@@ -115,10 +113,20 @@ for (ss in bodysites){
     
     ## log fold change chrinkage (explanations see https://hbctraining.github.io/DGE_workshop/lessons/05_DGE_DESeq2_analysis2.html#:~:text=Shrunken%20log2%20foldchanges%20(LFC),High%20dispersion%20values)
     resLFC <- lfcShrink(dds_run, coef = "BirthMode_CS_vs_VF", type = "apeglm", res = res)
-    resLFC_dat <- resLFC %>% data.frame %>% mutate(padj = ifelse(is.na(padj), 1, padj)) # explanations of NA in padj can be found https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#pvaluesNA and https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#i-want-to-benchmark-deseq2-comparing-to-other-de-tools.
+    res_dat <- res %>% data.frame %>% mutate(padj = ifelse(is.na(padj), 1, padj), isDE = ifelse(padj<=0.1, "Yes", "No")) # explanations of NA in padj can be found https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#pvaluesNA and https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#i-want-to-benchmark-deseq2-comparing-to-other-de-tools.
     
-    plot_volcano(resLFC_dat)
+    p_vol <- ggplot(data = res_dat %>% mutate(baseMean2 = cut(baseMean, breaks = c(0, 1000, 10000, Inf))), aes(x = log2FoldChange, y = -log10(padj), color = isDE)) + 
+        geom_point(aes(size = baseMean2)) + 
+        #geom_vline(xintercept=c(-1, 1), col="red") + 
+        geom_hline(yintercept=-log10(0.1), col="red") +
+        scale_color_manual(values = c("No" = "gray70", "Yes" = "red")) +
+        scale_size_manual(values = c(1, 2, 4), guide = "bins") +
+        theme_minimal(base_size = 12) +
+        labs(x = "Log2 Fold Change", y = "-log10(adjusted p Value)", color = "Differential\nExpressed", size = "Normalized\nMean Count", title = paste0("Volcano plots showing expression changes comparing CS to VF in ", ss))
+    print(p_vol)
     
+
+
 
 }
 ```
