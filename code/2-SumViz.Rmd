@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(ggrepel)
+library(ComplexHeatmap)
 ```
 
 
@@ -28,6 +29,9 @@ avg_fragment_len = 294 # this is from STAR output, for PE150
 # Import feature count outputs
 ft_0 <- read.table("../data/featureCounts/featureCounts_out", header = T, sep = "\t", check.names = F)
 colnames(ft_0) <- colnames(ft_0) %>% gsub("data\\/mapped_STAR\\/Aligned\\.out\\.bam\\:CSR2019-", "CSR2019\\.", .)
+
+# tpm and longer format
+ft_1 <- ft_0 %>% select(-c(Chr:Strand)) %>% pivot_longer(cols = -c(1:2), names_to = "sample_id", values_to = "raw_ct") %>% filter(raw_ct>0) %>% mutate(sample_id = gsub("data\\/mapped_STAR\\/Aligned\\.out\\.bam\\:", "", sample_id), sample_id = gsub("-", "\\.", sample_id), l_ef = pmax(0, Length - avg_fragment_len) + 1, ct_rate = raw_ct/l_ef) %>% group_by(sample_id) %>% mutate(tpm = ct_rate/sum(ct_rate)*1E6) %>% ungroup
 
 ```
 
@@ -72,25 +76,16 @@ names(BM_colors) = c("VF", "CSR", "CS", "VD")
 ### Jun-2021-proposal
 Here we use DESeq2 package and only compare VF and CS
 ```{r}
-
 library(DESeq2)
 library(apeglm)
 
-mt_wk = mt_0 %>% filter(BirthMode %in% c("VF", "CS"))
+comp = c("VF", "CS") # comp[1] reference, comp[2] comparison group
+mt_wk = mt_0 %>% filter(BirthMode %in% comp)
 ft_wk = ft_0 %>% select(1:5, mt_wk$TubeID)
 
 bodysites = c("Ileum", "Liver")
 
-plot_volcano=function(dat, x = "log2FoldChange", y = "padj", color = "isDE", size = "baseMean"){
-    g = ggplot(data = dat, aes(x = .data[[x]], y = -log10(.data[[y]]), color = .data[[color]])) + 
-        geom_point(aes(size = .data[[size]])) + 
-        #geom_vline(xintercept=c(-1, 1), col="red") + 
-        geom_hline(yintercept=-log10(0.1), col="red") +
-        labs(x = "Log2 Fold Change", y = "-log10(adjusted pValue)") + 
-        theme_minimal()
-    g
-}
-
+out = list()
 for (ss in bodysites){
     # ss = "Ileum"
     # prepare DESeq2 dataset
@@ -101,33 +96,89 @@ for (ss in bodysites){
     cts = ft_wk %>% select(1, rownames(coldata)) %>% column_to_rownames(var = "Geneid")
     ## DESeq2 dataset
     dds <- DESeqDataSetFromMatrix(countData = cts, colData = coldata, design = ~ BirthMode + Sex)
-    dds$BirthMode <- relevel(dds$BirthMode, ref = "VF")
+    dds$BirthMode <- relevel(dds$BirthMode, ref = comp[1])
     
     # prefiltering to increase speed and save memory, more strict filtering is automatically applied later
     keep <- rowSums(counts(dds)) >= 10 # genes with at least 10 reads across all samples
     dds <- dds[keep, ]
+    dds <- estimateSizeFactors(dds)
     
     # running DE analysis
-    dds_run <- DESeq(dds)
-    res <- results(dds_run, contrast = c("BirthMode", "CS", "VF"))
+    if (is.null(out[[ss]]$DESeq_res)){
+        dds_run <- DESeq(dds)
+        res <- results(dds_run, contrast = c("BirthMode", comp[2], comp[1]))
+    } else {res = out[[ss]]$DESeq_res}
+    cts_deseq = counts(dds, normalized = T)
     
     ## log fold change chrinkage (explanations see https://hbctraining.github.io/DGE_workshop/lessons/05_DGE_DESeq2_analysis2.html#:~:text=Shrunken%20log2%20foldchanges%20(LFC),High%20dispersion%20values)
-    resLFC <- lfcShrink(dds_run, coef = "BirthMode_CS_vs_VF", type = "apeglm", res = res)
-    res_dat <- res %>% data.frame %>% mutate(padj = ifelse(is.na(padj), 1, padj), isDE = ifelse(padj<=0.1, "Yes", "No")) # explanations of NA in padj can be found https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#pvaluesNA and https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#i-want-to-benchmark-deseq2-comparing-to-other-de-tools.
+    resLFC <- lfcShrink(dds_run, coef = paste("BirthMode", comp[2], "vs", comp[1], sep = "_"), type = "apeglm", res = res)
+    res_dat <- res %>% data.frame %>% mutate(padj = ifelse(is.na(padj), 1, padj), isDE = ifelse(padj<=0.1, "Yes", "No")) %>%  # explanations of NA in padj can be found https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#pvaluesNA and https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#i-want-to-benchmark-deseq2-comparing-to-other-de-tools.
+        merge(., gene_tbl, by.x = 0, by.y = 1, all.x = T) %>%
+        mutate(sig_gene = ifelse(isDE=="Yes", gene_name, NA))
     
+    # Volcano plot
     p_vol <- ggplot(data = res_dat %>% mutate(baseMean2 = cut(baseMean, breaks = c(0, 1000, 10000, Inf))), aes(x = log2FoldChange, y = -log10(padj), color = isDE)) + 
         geom_point(aes(size = baseMean2)) + 
         #geom_vline(xintercept=c(-1, 1), col="red") + 
+        geom_text_repel(aes(label = sig_gene), size = 10/.pt, show.legend = F) +
         geom_hline(yintercept=-log10(0.1), col="red") +
         scale_color_manual(values = c("No" = "gray70", "Yes" = "red")) +
         scale_size_manual(values = c(1, 2, 4), guide = "bins") +
-        theme_minimal(base_size = 12) +
-        labs(x = "Log2 Fold Change", y = "-log10(adjusted p Value)", color = "Differential\nExpressed", size = "Normalized\nMean Count", title = paste0("Volcano plots showing expression changes comparing CS to VF in ", ss))
-    print(p_vol)
+        theme_minimal(base_size = 12) + theme(aspect.ratio = 0.6) +
+        labs(x = "Log2 Fold Change", y = "-log10(adjusted p Value)", color = "Differential\nExpressed", size = "Normalized\nMean Count", title = paste0("Volcano plots showing expression changes comparing ", comp[2], " to ", comp[1], " in ", ss))
+    # Heatmap
+    cts_sig = ft_1 %>% filter(Geneid %in% res_dat$Row.names[res_dat$isDE=="Yes"], sample_id %in% rownames(coldata)) %>% merge(., gene_tbl, by = 1, all.x = T) # Get TPM for each gene in each sample
     
+    cts_sig_mat = cts_sig %>% pivot_wider(id_cols = Geneid, names_from = sample_id, values_from = tpm) %>% column_to_rownames(var = "Geneid")
+    cts_sig_mat_scale = cts_sig_mat %>% t() %>% scale() %>% t()
+    #cts_sig_mat = cts_deseq[res_dat$Row.names[res_dat$isDE=="Yes"],]
+    #cts_sig_mat[cts_sig_mat==0] = NA
+    cts_sig_mat_log = log10(cts_sig_mat) # convert to log10 scale, no count is NA value
 
+    ## annotation component
+    mat_col_fun = circlize::colorRamp2(c(-2,  0, 2), c("blue", "white", "red"))
+    ### dataframe for the column annotation
+    #coldata
+    column_ha = HeatmapAnnotation(
+        df = coldata, 
+        col = list(BirthMode = BM_colors, Sex = c("M" = "#fc8d62", "F" = "#66c2a5")),
+        annotation_name_gp = gpar(fontface = "bold"),
+        annotation_name_side = "left")
+    ### dataframe for row annotation
+    rowdata = cts_sig %>% group_by(Geneid, gene_name) %>% summarise(a_tpm = sum(tpm)/ncol(cts_sig_mat))
+    row_labels = structure(rowdata$gene_name, names = rowdata$Geneid)
+    row_ha = rowAnnotation(
+        a_tpm = rowSums(cts_sig_mat, na.rm = T)/ncol(cts_sig_mat), 
+        col = list(a_tpm = circlize::colorRamp2(seq(min(rowdata$a_tpm), max(rowdata$a_tpm), length.out = 7), hcl.colors(7, palette = "Oranges", rev = T))),
+        annotation_label = "Average TPM",
+        annotation_name_gp = gpar(fontface = "bold"),
+        annotation_name_side = "top")
 
+    p_heat = Heatmap(cts_sig_mat_scale,
+            name = "Z-score of TPM", row_title = "Differential Genes",
+            
+            #col = mat_col_fun,
+            show_column_names = F,
+            row_labels = row_labels[rownames(cts_sig_mat_log)],
+            top_annotation = column_ha,
+            right_annotation = row_ha)
+    
+    out[[ss]] = list(DESeq_res = res, DESeq_norm = cts_deseq, Data_sig = cts_sig, volcano = p_vol, heatmap = p_heat)
+}
+```
 
+Pathview
+```{r}
+library(pathview)
+library(gage)
+library(gageData)
+bodysites = c("Ileum", "Liver")
+
+for (ss in bodysites){
+    # ss = "Ileum"
+    de_res <- out[[ss]]$DESeq_res
+    de_lfc <- de_res["log2FoldChange"] %>% as.data.frame()
+    pv.out <- pathview(gene.data = de_lfc, pathway.id = "mmu", species = "mmu", out.suffix = "test/test")
 }
 ```
 
