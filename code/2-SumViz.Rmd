@@ -3,18 +3,19 @@ title: "2- Summarize and Visualize feature count"
 output: html_document
 ---
 
-```{r renv_setup, include = TRUE}
+```{r renv_setup, include = TRUE, echo = FALSE, message = FALSE}
 #renv::init() # only run once when the project is created.
 renv::restore() # run every time when a different computer is used (practically it is Ok to run every time)
 #renv::snapshot() # run every time in the end if there are new packages installed (practically it is Ok to run every time in the end)
 ```
-```{r setup, include = TRUE}
+```{r setup, include = TRUE, message=FALSE}
 
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(ggrepel)
 library(ComplexHeatmap)
+library(clusterProfiler)
 ```
 
 
@@ -63,6 +64,10 @@ gene_fixer <- function(str){
 }
 gene_raw = data.frame(raw = readLines("../data/reference/gencode.vM27.metadata.primary_assembly.annotation.col9"))
 gene_tbl = gene_raw$raw %>% str_split(., "; +", simplify = T) %>% split(., seq(nrow(.))) %>% lapply(., "gene_fixer") %>% data.table::rbindlist(use.names = T, fill = T)
+
+# generating ensemble geneid by removing gencode version number after . (see gencode gene_id format at https://www.gencodegenes.org/pages/data_format.html)
+gene_tbl$gene_id_ensg = str_split(gene_tbl$gene_id, pattern = "\\.", n = 2, simplify = T)[, 1]
+test = gconvert(gene_tbl$gene_id_ensg, organism = "mmusculus", target = "ENTREZGENE_ACC", filter_na = F)
 ```
 
 9. Misc
@@ -169,9 +174,6 @@ for (ss in bodysites){
 
 Pathview
 ```{r}
-library(pathview)
-library(gage)
-library(gageData)
 bodysites = c("Ileum", "Liver")
 
 for (ss in bodysites){
