@@ -51,6 +51,10 @@ mt_0 <- mt_raw %>% filter(Updates=="RNASeqFinished")
 ```{sh}
 # extract gene information from the gtf file
 awk -F"\t" '{if($3=="gene"){print $9}}' gencode.vM27.primary_assembly.annotation.gtf > gencode.vM27.metadata.primary_assembly.annotation.col9
+
+# download Wikipathways latest data 20210610
+# md5 = b639fccf32d134e74298fcf7d1ba438d
+wget https://wikipathways-data.wmcloud.org/current/gmt/wikipathways-20210610-gmt-Mus_musculus.gmt -P data/reference/
 ```
 ```{r}
 gene_fixer <- function(str){
@@ -67,7 +71,10 @@ gene_tbl = gene_raw$raw %>% str_split(., "; +", simplify = T) %>% split(., seq(n
 
 # generating ensemble geneid by removing gencode version number after . (see gencode gene_id format at https://www.gencodegenes.org/pages/data_format.html)
 gene_tbl$gene_id_ensg = str_split(gene_tbl$gene_id, pattern = "\\.", n = 2, simplify = T)[, 1]
-test = gconvert(gene_tbl$gene_id_ensg, organism = "mmusculus", target = "ENTREZGENE_ACC", filter_na = F)
+
+wpgmtfile <- read.gmt("../data/reference/wikipathways-20210610-gmt-Mus_musculus.gmt")
+
+
 ```
 
 9. Misc
