@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.0.3",
+    "Version": "4.0.2",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -901,6 +901,12 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "f4dbc5a47fd93d3415249884d31d6791"
+    },
+    "org.Mm.eg.db": {
+      "Package": "org.Mm.eg.db",
+      "Version": "3.12.0",
+      "Source": "Bioconductor",
+      "Hash": "4e4ee144dea09b789a4269a68306c0b5"
     },
     "pillar": {
       "Package": "pillar",

@@ -15,7 +15,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ggrepel)
 library(ComplexHeatmap)
-library(clusterProfiler)
 ```
 
 
@@ -30,6 +29,7 @@ avg_fragment_len = 294 # this is from STAR output, for PE150
 # Import feature count outputs
 ft_0 <- read.table("../data/featureCounts/featureCounts_out", header = T, sep = "\t", check.names = F)
 colnames(ft_0) <- colnames(ft_0) %>% gsub("data\\/mapped_STAR\\/Aligned\\.out\\.bam\\:CSR2019-", "CSR2019\\.", .)
+ft_0 <- ft_0 %>% rowwise() %>% filter(sum(c_across(starts_with("CSR2019")))>0) %>% ungroup # remove 0 count features
 
 # tpm and longer format
 ft_1 <- ft_0 %>% select(-c(Chr:Strand)) %>% pivot_longer(cols = -c(1:2), names_to = "sample_id", values_to = "raw_ct") %>% filter(raw_ct>0) %>% mutate(sample_id = gsub("data\\/mapped_STAR\\/Aligned\\.out\\.bam\\:", "", sample_id), sample_id = gsub("-", "\\.", sample_id), l_ef = pmax(0, Length - avg_fragment_len) + 1, ct_rate = raw_ct/l_ef) %>% group_by(sample_id) %>% mutate(tpm = ct_rate/sum(ct_rate)*1E6) %>% ungroup
@@ -67,13 +67,13 @@ gene_fixer <- function(str){
     return(str_o)
 }
 gene_raw = data.frame(raw = readLines("../data/reference/gencode.vM27.metadata.primary_assembly.annotation.col9"))
-gene_tbl = gene_raw$raw %>% str_split(., "; +", simplify = T) %>% split(., seq(nrow(.))) %>% lapply(., "gene_fixer") %>% data.table::rbindlist(use.names = T, fill = T)
+gene_tbl = gene_raw$raw %>% str_split(., "; +", simplify = T) %>% split(., seq(nrow(.))) %>% lapply(., "gene_fixer") %>% data.table::rbindlist(use.names = T, fill = T) %>% filter(gene_id %in% ft_0$Geneid)
 
 # generating ensemble geneid by removing gencode version number after . (see gencode gene_id format at https://www.gencodegenes.org/pages/data_format.html)
 gene_tbl$gene_id_ensg = str_split(gene_tbl$gene_id, pattern = "\\.", n = 2, simplify = T)[, 1]
 
+# wikipathway file
 wpgmtfile <- read.gmt("../data/reference/wikipathways-20210610-gmt-Mus_musculus.gmt")
-
 
 ```
 
@@ -116,10 +116,9 @@ for (ss in bodysites){
     dds <- estimateSizeFactors(dds)
     
     # running DE analysis
-    if (is.null(out[[ss]]$DESeq_res)){
-        dds_run <- DESeq(dds)
-        res <- results(dds_run, contrast = c("BirthMode", comp[2], comp[1]))
-    } else {res = out[[ss]]$DESeq_res}
+
+    dds_run <- DESeq(dds)
+    res <- results(dds_run, contrast = c("BirthMode", comp[2], comp[1]))
     cts_deseq = counts(dds, normalized = T)
     
     ## log fold change chrinkage (explanations see https://hbctraining.github.io/DGE_workshop/lessons/05_DGE_DESeq2_analysis2.html#:~:text=Shrunken%20log2%20foldchanges%20(LFC),High%20dispersion%20values)
@@ -178,9 +177,12 @@ for (ss in bodysites){
     out[[ss]] = list(DESeq_res = res, DESeq_norm = cts_deseq, Data_sig = cts_sig, volcano = p_vol, heatmap = p_heat)
 }
 ```
-
-Pathview
+ClusterProfiler
 ```{r}
+library(clusterProfiler)
+library(org.Mm.eg.db)
+out$Ileum$DESeq_res
+
 bodysites = c("Ileum", "Liver")
 
 for (ss in bodysites){
