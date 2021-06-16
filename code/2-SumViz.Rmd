@@ -1,9 +1,4 @@
 ---
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
-y---
 title: "2- Summarize and Visualize feature count"
 output: html_document
 ---
@@ -34,10 +29,10 @@ avg_fragment_len = 294 # this is from STAR output, for PE150
 # Import feature count outputs
 ft_0 <- read.table("../data/featureCounts/featureCounts_out", header = T, sep = "\t", check.names = F)
 colnames(ft_0) <- colnames(ft_0) %>% gsub("data\\/mapped_STAR\\/Aligned\\.out\\.bam\\:CSR2019-", "CSR2019\\.", .)
-ft_0 <- ft_0 %>% rowwise() %>% filter(sum(c_across(starts_with("CSR2019")))>0) %>% ungroup # remove 0 count features
+ft_0 <- ft_0 %>% rowwise() %>% dplyr::filter(sum(c_across(starts_with("CSR2019")))>0) %>% ungroup # remove 0 count features
 
 # tpm and longer format
-ft_1 <- ft_0 %>% select(-c(Chr:Strand)) %>% pivot_longer(cols = -c(1:2), names_to = "sample_id", values_to = "raw_ct") %>% filter(raw_ct>0) %>% mutate(sample_id = gsub("data\\/mapped_STAR\\/Aligned\\.out\\.bam\\:", "", sample_id), sample_id = gsub("-", "\\.", sample_id), l_ef = pmax(0, Length - avg_fragment_len) + 1, ct_rate = raw_ct/l_ef) %>% group_by(sample_id) %>% mutate(tpm = ct_rate/sum(ct_rate)*1E6) %>% ungroup
+ft_1 <- ft_0 %>% dplyr::select(-c(Chr:Strand)) %>% pivot_longer(cols = -c(1:2), names_to = "sample_id", values_to = "raw_ct") %>% dplyr::filter(raw_ct>0) %>% mutate(sample_id = gsub("data\\/mapped_STAR\\/Aligned\\.out\\.bam\\:", "", sample_id), sample_id = gsub("-", "\\.", sample_id), l_ef = pmax(0, Length - avg_fragment_len) + 1, ct_rate = raw_ct/l_ef) %>% group_by(sample_id) %>% mutate(tpm = ct_rate/sum(ct_rate)*1E6) %>% ungroup
 
 ```
 
@@ -46,10 +41,10 @@ ft_1 <- ft_0 %>% select(-c(Chr:Strand)) %>% pivot_longer(cols = -c(1:2), names_t
 mt_raw <- read.table("../data/Metadata_RNAseq_06072021-jw.txt", header = T, sep = "\t")
 
 # metadata integrity check
-sample_id = mt_raw %>% filter(Updates=="RNASeqFinished") %>% pull(TubeID)
+sample_id = mt_raw %>% dplyr::filter(Updates=="RNASeqFinished") %>% pull(TubeID)
 intersect(sample_id, colnames(ft_0)) %>% length
 
-mt_0 <- mt_raw %>% filter(Updates=="RNASeqFinished")
+mt_0 <- mt_raw %>% dplyr::filter(Updates=="RNASeqFinished")
 ```
 
 3. Gene annotation
@@ -72,14 +67,15 @@ gene_fixer <- function(str){
     return(str_o)
 }
 gene_raw = data.frame(raw = readLines("../data/reference/gencode.vM27.metadata.primary_assembly.annotation.col9"))
-gene_tbl = gene_raw$raw %>% str_split(., "; +", simplify = T) %>% split(., seq(nrow(.))) %>% lapply(., "gene_fixer") %>% data.table::rbindlist(use.names = T, fill = T) %>% filter(gene_id %in% ft_0$Geneid)
+gene_tbl = gene_raw$raw %>% str_split(., "; +", simplify = T) %>% split(., seq(nrow(.))) %>% lapply(., "gene_fixer") %>% data.table::rbindlist(use.names = T, fill = T) %>% dplyr::filter(gene_id %in% ft_0$Geneid)
 
 # generating ensemble geneid by removing gencode version number after . (see gencode gene_id format at https://www.gencodegenes.org/pages/data_format.html)
 gene_tbl$gene_id_ensg = str_split(gene_tbl$gene_id, pattern = "\\.", n = 2, simplify = T)[, 1]
 
 # wikipathway file
-wpgmtfile <- read.gmt("../data/reference/wikipathways-20210610-gmt-Mus_musculus.gmt") %>% separate(term, c("name","version","wpid","org"), "%")
+wpgmtfile <- clusterProfiler::read.gmt("../data/reference/wikipathways-20210610-gmt-Mus_musculus.gmt") %>% separate(term, c("name","version","wpid","org"), "%")
 
+msigdb <- msigdbr::msigdbr(species = "Mus musculus")
 ```
 
 9. Misc
@@ -97,8 +93,8 @@ library(DESeq2)
 library(apeglm)
 
 comp = c("VF", "CS") # comp[1] reference, comp[2] comparison group
-mt_wk = mt_0 %>% filter(BirthMode %in% comp)
-ft_wk = ft_0 %>% select(1:5, mt_wk$TubeID)
+mt_wk = mt_0 %>% dplyr::filter(BirthMode %in% comp)
+ft_wk = ft_0 %>% dplyr::select(1:5, mt_wk$TubeID)
 
 bodysites = c("Ileum", "Liver")
 
@@ -107,10 +103,10 @@ for (ss in bodysites){
     # ss = "Ileum"
     # prepare DESeq2 dataset
     ## metadata, rownames are sample name
-    coldata = mt_wk %>% filter(BodySite==ss) %>% select(TubeID, BirthMode, Sex) %>% mutate(across(.col = -1, .fns = factor)) %>% column_to_rownames(var = "TubeID")
+    coldata = mt_wk %>% dplyr::filter(BodySite==ss) %>% dplyr::select(TubeID, BirthMode, Sex) %>% mutate(across(.col = -1, .fns = factor)) %>% column_to_rownames(var = "TubeID")
     nsamples = nrow(coldata)
     ## count matrix, rownames are gene names, colnames are sample names
-    cts = ft_wk %>% select(1, rownames(coldata)) %>% column_to_rownames(var = "Geneid")
+    cts = ft_wk %>% dplyr::select(1, rownames(coldata)) %>% column_to_rownames(var = "Geneid")
     ## DESeq2 dataset
     dds <- DESeqDataSetFromMatrix(countData = cts, colData = coldata, design = ~ BirthMode + Sex)
     dds$BirthMode <- relevel(dds$BirthMode, ref = comp[1])
@@ -143,7 +139,7 @@ for (ss in bodysites){
         theme_minimal(base_size = 12) + theme(aspect.ratio = 0.6) +
         labs(x = "Log2 Fold Change", y = "-log10(adjusted p Value)", color = "Differential\nExpressed", size = "Normalized\nMean Count", title = paste0("Volcano plots showing expression changes comparing ", comp[2], " to ", comp[1], " in ", ss))
     # Heatmap
-    cts_sig = ft_1 %>% filter(Geneid %in% res_dat$Row.names[res_dat$isDE=="Yes"], sample_id %in% rownames(coldata)) %>% merge(., gene_tbl, by = 1, all.x = T) # Get TPM for each gene in each sample
+    cts_sig = ft_1 %>% dplyr::filter(Geneid %in% res_dat$Row.names[res_dat$isDE=="Yes"], sample_id %in% rownames(coldata)) %>% merge(., gene_tbl, by = 1, all.x = T) # Get TPM for each gene in each sample
     
     cts_sig_mat = cts_sig %>% pivot_wider(id_cols = Geneid, names_from = sample_id, values_from = tpm) %>% column_to_rownames(var = "Geneid")
     cts_sig_mat_scale = cts_sig_mat %>% t() %>% scale() %>% t()
@@ -179,13 +175,15 @@ for (ss in bodysites){
             top_annotation = column_ha,
             right_annotation = row_ha)
     
-    out[[ss]] = list(DESeq_res = res, DESeq_norm = cts_deseq, Data_sig = cts_sig, volcano = p_vol, heatmap = p_heat)
+    out[[ss]] = list(DESeq_run = dds_run, DESeq_norm = cts_deseq, Data_sig = cts_sig, volcano = p_vol, heatmap = p_heat)
 }
 ```
 ClusterProfiler
 ```{r}
 library(clusterProfiler)
 library(org.Mm.eg.db)
+#library(pathview)
+library(msigdbr)
 
 out$Ileum$DESeq_res
 
@@ -193,18 +191,44 @@ bodysites = c("Ileum", "Liver")
 
 for (ss in bodysites){
     # ss = "Ileum"
-    res <- out[[ss]]$DESeq_res %>% as.data.frame()
-    res_sorted <- res %>% arrange(desc(log2FoldChange)) %>% rownames_to_column(var = "Geneid") %>% mutate(ENSEMBLID =  str_split(Geneid, pattern = "\\.", n = 2, simplify = T)[, 1])
+    res <- results(out[[ss]]$DESeq_run, contrast = c("BirthMode", comp[2], comp[1]))
+    resLFC <- lfcShrink(out[[ss]]$DESeq_run, coef = paste("BirthMode", comp[2], "vs", comp[1], sep = "_"), type = "apeglm", res = res)
+        
+    res_genes <- resLFC %>% as.data.frame() %>% rownames_to_column(var = "Geneid") %>% mutate(ENSEMBLID =  str_split(Geneid, pattern = "\\.", n = 2, simplify = T)[, 1])
+    res_genes_id <- bitr(res_genes$ENSEMBLID, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = "org.Mm.eg.db", drop = F)
+    res_genes = merge(res_genes, res_genes_id, by.x = "ENSEMBLID", by.y = 1, all.x = T)
     
-    res_gene_id <- bitr(res_sorted$ENSEMBLID, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = "org.Mm.eg.db", drop = F)
+    res_genelist <- res_genes$log2FoldChange
+    names(res_genelist) <- res_genes$ENSEMBLID
     
-    # res_sig <- res  %>% rownames_to_column(var = "Geneid") %>% filter(padj<=0.1)
-    # res_sig_gene = data.frame(Geneid = (res_sig$Geneid %>% str_split(pattern = "\\.", n = 2, simplify = T))[, 1])
-    # res_sig_gene = res_sig_gene %>% merge(., bitr(res_sig_gene$Geneid, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = "org.Mm.eg.db", drop = F), by = 1, all.x = T)
+    m_t2g <-  msigdb %>% dplyr::select(gs_name, ensembl_gene)
+    
+    em2 <- GSEA(res_genelist %>% sort(decreasing = T), TERM2GENE = m_t2g, pvalueCutoff = 0.1)
     # 
+    # outKEGG <- gseKEGG(res_genelist, organism = "mmu", keyType = "kegg", pvalueCutoff = 0.1)
+    # 
+    # outKEGG_pwyid_sig <- outKEGG %>% as.data.frame() %>% dplyr::filter(p.adjust<=0.05) %>% pull(ID)
+    # 
+    # outKEGG_pwyview <- pathview(gene.data = res_genelist, pathway.id = outKEGG_pwyid_sig, species = "mmu", limit = list(gene=max(abs(res_genelist)), cpd=1))
+
+    
+    
+    
+    # res_gene_id <- bitr(res$ENSEMBLID, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = "org.Mm.eg.db", drop = F)
+    # 
+    # res_gene_id = merge(res, res_gene_id, by.x = "ENSEMBLID", by.y = 1, all.x = T) %>% dplyr::filter(!is.na(ENTREZID)) %>% dplyr::arrange(desc(log2FoldChange)) %>% dplyr::select(ENTREZID, log2FoldChange) %>% dplyr::group_by(ENTREZID) %>% filter(log2FoldChange == max(log2FoldChange)) %>% ungroup()
+    # 
+    # res_gene_list <- res_gene_id$log2FoldChange
+    # names(res_gene_list) <- res_gene_id$ENTREZID
+    # 
+    # 
+    # # res_sig <- res  %>% rownames_to_column(var = "Geneid") %>% filter(padj<=0.1)
+    # # res_sig_gene = data.frame(Geneid = (res_sig$Geneid %>% str_split(pattern = "\\.", n = 2, simplify = T))[, 1])
+    # # res_sig_gene = res_sig_gene %>% merge(., bitr(res_sig_gene$Geneid, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = "org.Mm.eg.db", drop = F), by = 1, all.x = T)
+    # # 
     # wpid2gene <- wpgmtfile %>% dplyr::select(wpid, gene)
     # wpid2name <- wpgmtfile %>% dplyr::select(wpid, name)
-    ewp2 <- GSEA(res_sig_gene$ENTREZID, TERM2GENE = wpid2gene, TERM2NAME = wpid2name, qvalueCutoff = 0.1)
+    # ewp2 <- GSEA(res_gene_list, TERM2GENE = wpid2gene, TERM2NAME = wpid2name, pvalueCutoff = 0.1)
 }
 ```
 

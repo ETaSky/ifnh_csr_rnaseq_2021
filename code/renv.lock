@@ -162,6 +162,12 @@
       "Source": "Bioconductor",
       "Hash": "343c1821f29a5061d66b2bdb4e87da35"
     },
+    "KEGGgraph": {
+      "Package": "KEGGgraph",
+      "Version": "1.52.0",
+      "Source": "Bioconductor",
+      "Hash": "efeb00ee392b909178a817597e219046"
+    },
     "MASS": {
       "Package": "MASS",
       "Version": "7.3-54",
@@ -238,6 +244,12 @@
       "Repository": "CRAN",
       "Hash": "750f0527a0edaf99c29cf1e778b27a6f"
     },
+    "Rgraphviz": {
+      "Package": "Rgraphviz",
+      "Version": "2.36.0",
+      "Source": "Bioconductor",
+      "Hash": "60d2406f4304a63256c7bc2ce832520e"
+    },
     "S4Vectors": {
       "Package": "S4Vectors",
       "Version": "0.30.0",
@@ -302,6 +314,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "50c838a310445e954bc13f26f26a6ecf"
+    },
+    "babelgene": {
+      "Package": "babelgene",
+      "Version": "21.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "8838e25ab68b381e3f9b3ac14cd88575"
     },
     "backports": {
       "Package": "backports",
@@ -687,8 +706,9 @@
       "Package": "ggtree",
       "Version": "3.0.2",
       "Source": "Bioconductor",
+      "RemoteType": "bioconductor",
       "Remotes": "GuangchuangYu/treeio",
-      "Hash": "d40b77638096a53b9012627e2a9aadb8"
+      "Hash": "fbde6fb19d51f818f58110a515f454c8"
     },
     "glue": {
       "Package": "glue",
@@ -710,6 +730,12 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "fd028aa45f6785d7e83c0ed896b45904"
+    },
+    "graph": {
+      "Package": "graph",
+      "Version": "1.70.0",
+      "Source": "Bioconductor",
+      "Hash": "959c5ec255150e48b198d57ffd2d375e"
     },
     "graphlayouts": {
       "Package": "graphlayouts",
@@ -907,6 +933,13 @@
       "Repository": "CRAN",
       "Hash": "9fd59716311ee82cba83dc2826fc5577"
     },
+    "msigdbr": {
+      "Package": "msigdbr",
+      "Version": "7.4.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1ed7d54982b0c2eaf3539efa0cd2e0c6"
+    },
     "munsell": {
       "Package": "munsell",
       "Version": "0.5.0",
@@ -942,6 +975,12 @@
       "Repository": "CRAN",
       "Hash": "f4dbc5a47fd93d3415249884d31d6791"
     },
+    "org.Hs.eg.db": {
+      "Package": "org.Hs.eg.db",
+      "Version": "3.13.0",
+      "Source": "Bioconductor",
+      "Hash": "631664952a45a638e6827b0832ba0287"
+    },
     "org.Mm.eg.db": {
       "Package": "org.Mm.eg.db",
       "Version": "3.13.0",
@@ -954,6 +993,12 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "c446b30cb33ec125ff02588b60660ccb"
+    },
+    "pathview": {
+      "Package": "pathview",
+      "Version": "1.32.0",
+      "Source": "Bioconductor",
+      "Hash": "248e34f21096d6e82547a0663d17a99c"
     },
     "pillar": {
       "Package": "pillar",
@@ -1257,9 +1302,15 @@
     },
     "treeio": {
       "Package": "treeio",
-      "Version": "1.16.1",
-      "Source": "Bioconductor",
-      "Hash": "c739b150d5003917a73105e75bea41a6"
+      "Version": "1.17.1.992",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "GuangchuangYu",
+      "RemoteRepo": "treeio",
+      "RemoteRef": "master",
+      "RemoteSha": "c5c2263fdb4221b960febd4b5a2c5dd754ad0664",
+      "Hash": "bdbf6be72fdbdd1eeaea32d0ca163a23"
     },
     "tweenr": {
       "Package": "tweenr",
