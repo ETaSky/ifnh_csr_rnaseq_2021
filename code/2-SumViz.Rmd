@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 y---
 title: "2- Summarize and Visualize feature count"
 output: html_document
@@ -73,7 +78,7 @@ gene_tbl = gene_raw$raw %>% str_split(., "; +", simplify = T) %>% split(., seq(n
 gene_tbl$gene_id_ensg = str_split(gene_tbl$gene_id, pattern = "\\.", n = 2, simplify = T)[, 1]
 
 # wikipathway file
-wpgmtfile <- read.gmt("../data/reference/wikipathways-20210610-gmt-Mus_musculus.gmt")
+wpgmtfile <- read.gmt("../data/reference/wikipathways-20210610-gmt-Mus_musculus.gmt") %>% separate(term, c("name","version","wpid","org"), "%")
 
 ```
 
@@ -181,15 +186,25 @@ ClusterProfiler
 ```{r}
 library(clusterProfiler)
 library(org.Mm.eg.db)
+
 out$Ileum$DESeq_res
 
 bodysites = c("Ileum", "Liver")
 
 for (ss in bodysites){
     # ss = "Ileum"
-    de_res <- out[[ss]]$DESeq_res
-    de_lfc <- de_res["log2FoldChange"] %>% as.data.frame()
-    pv.out <- pathview(gene.data = de_lfc, pathway.id = "mmu", species = "mmu", out.suffix = "test/test")
+    res <- out[[ss]]$DESeq_res %>% as.data.frame()
+    res_sorted <- res %>% arrange(desc(log2FoldChange)) %>% rownames_to_column(var = "Geneid") %>% mutate(ENSEMBLID =  str_split(Geneid, pattern = "\\.", n = 2, simplify = T)[, 1])
+    
+    res_gene_id <- bitr(res_sorted$ENSEMBLID, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = "org.Mm.eg.db", drop = F)
+    
+    # res_sig <- res  %>% rownames_to_column(var = "Geneid") %>% filter(padj<=0.1)
+    # res_sig_gene = data.frame(Geneid = (res_sig$Geneid %>% str_split(pattern = "\\.", n = 2, simplify = T))[, 1])
+    # res_sig_gene = res_sig_gene %>% merge(., bitr(res_sig_gene$Geneid, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = "org.Mm.eg.db", drop = F), by = 1, all.x = T)
+    # 
+    # wpid2gene <- wpgmtfile %>% dplyr::select(wpid, gene)
+    # wpid2name <- wpgmtfile %>% dplyr::select(wpid, name)
+    ewp2 <- GSEA(res_sig_gene$ENTREZID, TERM2GENE = wpid2gene, TERM2NAME = wpid2name, qvalueCutoff = 0.1)
 }
 ```
 
