@@ -1,0 +1,50 @@
+---
+title: "2- Summarize and Visualize feature count"
+author: "Jincheng Wang"
+date: "6/21/2021"
+output: html_document
+---
+
+```{r renv_setup, include = TRUE, echo = FALSE, message = FALSE}
+#renv::init() # only run once when the project is created.
+renv::restore() # run every time when a different computer is used (practically it is Ok to run every time)
+#renv::snapshot() # run every time in the end if there are new packages installed (practically it is Ok to run every time in the end)
+```
+
+
+```{r setup, include = TRUE, message=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+```
+
+## Import outside files
+1. Metadata
+
+```{r}
+mt_raw <- read.table("../data/Metadata_RNAseq_06072021-jw.txt", header = T, sep = "\t")
+```
+
+2. Salmon counts
+Here we are importing the count estimate output from Salmon.
+```{r}
+# PE
+dat_path = dir("../data/mapped_salmon/PE", pattern = "*_quant", full.names = T, recursive = F)
+sample_id = gsub("_quant", "", basename(dat_path))
+
+pe_ct_fls = lapply(dat_path, function(x){read.table(file = paste0(x, "/quant.sf"), header = T, sep = "\t") %>% filter(TPM>0)})
+names(pe_ct_fls) <- sample_id
+
+pe_ct_dat = data.table::rbindlist(pe_ct_fls, use.names = T, idcol = "sample.id")
+# fix sample id format
+pe_ct_dat$sample.id = gsub("-", "\\.", pe_ct_dat$sample.id)
+
+# some QC
+pe_ct_dat %>% distinct(Name, Length, EffectiveLength) %>% arrange(Name) %>% group_by(Name) %>% filter(n()>1) # this indicates that each transcript's effective length is calculated on per sample basis, in that a fragment length is estimated for each sample in PE run
+
+pe_ct_dat %>% filter(sample.id == sample.id[1]) %>% mutate(Frg = Length-EffectiveLength)
+
+```
+
