@@ -1,6 +1,10 @@
 TrimmomaticPE: Started with arguments:
- -threads 8 -phred33 -trimlog data/qc/CSR2019-0059.log data/raw/CSR2019-0059_R1_001.fastq.gz data/raw/CSR2019-0059_R2_001.fastq.gz data/qc/CSR2019-0059_O1_paired.fastq data/qc/CSR2019-0059_O1_unpaired.fastq data/qc/CSR2019-0059_O2_paired.fastq data/qc/CSR2019-0059_O2_unpaired.fastq ILLUMINACLIP:/local/home/jingchengw/miniconda3/envs/RNAseqIFNH/share/trimmomatic/adapters/TruSeq3-PE.fa:2:30:10:2:keepBothReads LEADING:20 TRAILING:20 SLIDINGWINDOW:4:15 MINLEN:35
+ -threads 8 -phred33 -trimlog data/qc/CSR2019-0059.log data/raw/CSR2019-0059_R1_001.fastq.gz data/raw/CSR2019-0059_R2_001.fastq.gz data/qc/CSR2019-0059_O1_paired.fastq data/qc/CSR2019-0059_O1_unpaired.fastq data/qc/CSR2019-0059_O2_paired.fastq data/qc/CSR2019-0059_O2_unpaired.fastq ILLUMINACLIP:/local/home/jingchengw/miniconda3/envs/RNAseqIFNH/share/trimmomatic/adapters/TruSeq3-PE-2.fa:2:30:10:2:TRUE LEADING:20 TRAILING:20 SLIDINGWINDOW:4:15 MINLEN:10
 Using PrefixPair: 'TACACTCTTTCCCTACACGACGCTCTTCCGATCT' and 'GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT'
-ILLUMINACLIP: Using 1 prefix pairs, 0 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
-Input Read Pairs: 19256778 Both Surviving: 13774756 (71.53%) Forward Only Surviving: 5294557 (27.49%) Reverse Only Surviving: 102970 (0.53%) Dropped: 84495 (0.44%)
+Using Long Clipping Sequence: 'AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA'
+Using Long Clipping Sequence: 'AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC'
+Using Long Clipping Sequence: 'GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT'
+Using Long Clipping Sequence: 'TACACTCTTTCCCTACACGACGCTCTTCCGATCT'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Input Read Pairs: 19256778 Both Surviving: 19056774 (98.96%) Forward Only Surviving: 128969 (0.67%) Reverse Only Surviving: 54943 (0.29%) Dropped: 16092 (0.08%)
 TrimmomaticPE: Completed successfully

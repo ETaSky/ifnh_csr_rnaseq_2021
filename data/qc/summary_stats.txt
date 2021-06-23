@@ -1,98 +1,95 @@
 CSR2019-0005
-Input Read Pairs: 18399348 Both Surviving: 13175366 (71.61%) Forward Only Surviving: 5035896 (27.37%) Reverse Only Surviving: 103212 (0.56%) Dropped: 84874 (0.46%)
+Input Read Pairs: 18399348 Both Surviving: 18190129 (98.86%) Forward Only Surviving: 128556 (0.70%) Reverse Only Surviving: 53989 (0.29%) Dropped: 26674 (0.14%)
 CSR2019-0008
-Input Read Pairs: 19363528 Both Surviving: 13644537 (70.47%) Forward Only Surviving: 5540904 (28.62%) Reverse Only Surviving: 99781 (0.52%) Dropped: 78306 (0.40%)
+Input Read Pairs: 19363528 Both Surviving: 19127343 (98.78%) Forward Only Surviving: 118324 (0.61%) Reverse Only Surviving: 63655 (0.33%) Dropped: 54206 (0.28%)
 CSR2019-0014
-Input Read Pairs: 20453508 Both Surviving: 14366281 (70.24%) Forward Only Surviving: 5873625 (28.72%) Reverse Only Surviving: 115115 (0.56%) Dropped: 98487 (0.48%)
+Input Read Pairs: 20453508 Both Surviving: 20176283 (98.64%) Forward Only Surviving: 143572 (0.70%) Reverse Only Surviving: 86212 (0.42%) Dropped: 47441 (0.23%)
 CSR2019-0017
-Input Read Pairs: 14339333 Both Surviving: 9917597 (69.16%) Forward Only Surviving: 4286694 (29.89%) Reverse Only Surviving: 76637 (0.53%) Dropped: 58405 (0.41%)
+Input Read Pairs: 14339333 Both Surviving: 14158551 (98.74%) Forward Only Surviving: 79205 (0.55%) Reverse Only Surviving: 60744 (0.42%) Dropped: 40833 (0.28%)
 CSR2019-0023
-Input Read Pairs: 18885360 Both Surviving: 13309748 (70.48%) Forward Only Surviving: 5382527 (28.50%) Reverse Only Surviving: 103596 (0.55%) Dropped: 89489 (0.47%)
+Input Read Pairs: 18885360 Both Surviving: 18674529 (98.88%) Forward Only Surviving: 133582 (0.71%) Reverse Only Surviving: 60967 (0.32%) Dropped: 16282 (0.09%)
 CSR2019-0032
-Input Read Pairs: 23071358 Both Surviving: 16231955 (70.36%) Forward Only Surviving: 6613751 (28.67%) Reverse Only Surviving: 122522 (0.53%) Dropped: 103130 (0.45%)
+Input Read Pairs: 23071358 Both Surviving: 22744687 (98.58%) Forward Only Surviving: 158414 (0.69%) Reverse Only Surviving: 97659 (0.42%) Dropped: 70598 (0.31%)
 CSR2019-0041
-Input Read Pairs: 14784356 Both Surviving: 10248253 (69.32%) Forward Only Surviving: 4392913 (29.71%) Reverse Only Surviving: 78213 (0.53%) Dropped: 64977 (0.44%)
+Input Read Pairs: 14784356 Both Surviving: 14616331 (98.86%) Forward Only Surviving: 92734 (0.63%) Reverse Only Surviving: 51566 (0.35%) Dropped: 23725 (0.16%)
 CSR2019-0044
-Input Read Pairs: 15992403 Both Surviving: 10392769 (64.99%) Forward Only Surviving: 5440987 (34.02%) Reverse Only Surviving: 84626 (0.53%) Dropped: 74021 (0.46%)
+Input Read Pairs: 15992403 Both Surviving: 15794579 (98.76%) Forward Only Surviving: 89763 (0.56%) Reverse Only Surviving: 62265 (0.39%) Dropped: 45796 (0.29%)
 CSR2019-0050
-Input Read Pairs: 15495347 Both Surviving: 10980563 (70.86%) Forward Only Surviving: 4363039 (28.16%) Reverse Only Surviving: 82017 (0.53%) Dropped: 69728 (0.45%)
+Input Read Pairs: 15495347 Both Surviving: 15328803 (98.93%) Forward Only Surviving: 106088 (0.68%) Reverse Only Surviving: 43498 (0.28%) Dropped: 16958 (0.11%)
 CSR2019-0053
-Input Read Pairs: 16943397 Both Surviving: 11521833 (68.00%) Forward Only Surviving: 5265036 (31.07%) Reverse Only Surviving: 85580 (0.51%) Dropped: 70948 (0.42%)
+Input Read Pairs: 16943397 Both Surviving: 16756794 (98.90%) Forward Only Surviving: 96084 (0.57%) Reverse Only Surviving: 62087 (0.37%) Dropped: 28432 (0.17%)
 CSR2019-0059
-Input Read Pairs: 19256778 Both Surviving: 13774756 (71.53%) Forward Only Surviving: 5294557 (27.49%) Reverse Only Surviving: 102970 (0.53%) Dropped: 84495 (0.44%)
+Input Read Pairs: 19256778 Both Surviving: 19056774 (98.96%) Forward Only Surviving: 128969 (0.67%) Reverse Only Surviving: 54943 (0.29%) Dropped: 16092 (0.08%)
 CSR2019-0077
-Input Read Pairs: 20332579 Both Surviving: 14490735 (71.27%) Forward Only Surviving: 5643266 (27.75%) Reverse Only Surviving: 108570 (0.53%) Dropped: 90008 (0.44%)
+Input Read Pairs: 20332579 Both Surviving: 20129159 (99.00%) Forward Only Surviving: 134952 (0.66%) Reverse Only Surviving: 53112 (0.26%) Dropped: 15356 (0.08%)
 CSR2019-0080
-Input Read Pairs: 20351213 Both Surviving: 14183203 (69.69%) Forward Only Surviving: 5970245 (29.34%) Reverse Only Surviving: 110345 (0.54%) Dropped: 87420 (0.43%)
+Input Read Pairs: 20351213 Both Surviving: 20113369 (98.83%) Forward Only Surviving: 119422 (0.59%) Reverse Only Surviving: 76216 (0.37%) Dropped: 42206 (0.21%)
 CSR2019-0089
-Input Read Pairs: 22739180 Both Surviving: 15210197 (66.89%) Forward Only Surviving: 7301583 (32.11%) Reverse Only Surviving: 117152 (0.52%) Dropped: 110248 (0.48%)
+Input Read Pairs: 22739180 Both Surviving: 22460786 (98.78%) Forward Only Surviving: 161561 (0.71%) Reverse Only Surviving: 70329 (0.31%) Dropped: 46504 (0.20%)
 CSR2019-0209
-Input Read Pairs: 18632453 Both Surviving: 13106645 (70.34%) Forward Only Surviving: 5337410 (28.65%) Reverse Only Surviving: 100159 (0.54%) Dropped: 88239 (0.47%)
+Input Read Pairs: 18632453 Both Surviving: 18435877 (98.94%) Forward Only Surviving: 133196 (0.71%) Reverse Only Surviving: 45337 (0.24%) Dropped: 18043 (0.10%)
 CSR2019-0212
-Input Read Pairs: 22269477 Both Surviving: 15232826 (68.40%) Forward Only Surviving: 6818918 (30.62%) Reverse Only Surviving: 113184 (0.51%) Dropped: 104549 (0.47%)
+Input Read Pairs: 22269477 Both Surviving: 21988587 (98.74%) Forward Only Surviving: 159607 (0.72%) Reverse Only Surviving: 76014 (0.34%) Dropped: 45269 (0.20%)
 CSR2019-0218
-Input Read Pairs: 20030034 Both Surviving: 14069196 (70.24%) Forward Only Surviving: 5751929 (28.72%) Reverse Only Surviving: 111225 (0.56%) Dropped: 97684 (0.49%)
+Input Read Pairs: 20030034 Both Surviving: 19810118 (98.90%) Forward Only Surviving: 143606 (0.72%) Reverse Only Surviving: 54445 (0.27%) Dropped: 21865 (0.11%)
 CSR2019-0221
-Input Read Pairs: 24532433 Both Surviving: 16533800 (67.40%) Forward Only Surviving: 7748718 (31.59%) Reverse Only Surviving: 127750 (0.52%) Dropped: 122165 (0.50%)
+Input Read Pairs: 24532433 Both Surviving: 24177686 (98.55%) Forward Only Surviving: 180878 (0.74%) Reverse Only Surviving: 121042 (0.49%) Dropped: 52827 (0.22%)
 CSR2019-0227
-Input Read Pairs: 20128975 Both Surviving: 14192339 (70.51%) Forward Only Surviving: 5722060 (28.43%) Reverse Only Surviving: 114788 (0.57%) Dropped: 99788 (0.50%)
+Input Read Pairs: 20128975 Both Surviving: 19884341 (98.78%) Forward Only Surviving: 153326 (0.76%) Reverse Only Surviving: 68867 (0.34%) Dropped: 22441 (0.11%)
 CSR2019-0230
-Input Read Pairs: 21296913 Both Surviving: 14991653 (70.39%) Forward Only Surviving: 6112552 (28.70%) Reverse Only Surviving: 103370 (0.49%) Dropped: 89338 (0.42%)
 CSR2019-0236
-Input Read Pairs: 22475262 Both Surviving: 15447489 (68.73%) Forward Only Surviving: 6792376 (30.22%) Reverse Only Surviving: 124783 (0.56%) Dropped: 110614 (0.49%)
 CSR2019-0239
-Input Read Pairs: 15501642 Both Surviving: 10651539 (68.71%) Forward Only Surviving: 4710974 (30.39%) Reverse Only Surviving: 74180 (0.48%) Dropped: 64949 (0.42%)
 CSR2019-0371
-Input Read Pairs: 18290579 Both Surviving: 12381638 (67.69%) Forward Only Surviving: 5722613 (31.29%) Reverse Only Surviving: 98624 (0.54%) Dropped: 87704 (0.48%)
+Input Read Pairs: 18290579 Both Surviving: 18055193 (98.71%) Forward Only Surviving: 122247 (0.67%) Reverse Only Surviving: 73353 (0.40%) Dropped: 39786 (0.22%)
 CSR2019-0380
-Input Read Pairs: 16210786 Both Surviving: 11277061 (69.57%) Forward Only Surviving: 4763468 (29.38%) Reverse Only Surviving: 91231 (0.56%) Dropped: 79026 (0.49%)
+Input Read Pairs: 16210786 Both Surviving: 16014667 (98.79%) Forward Only Surviving: 115742 (0.71%) Reverse Only Surviving: 53996 (0.33%) Dropped: 26381 (0.16%)
 CSR2019-0383
-Input Read Pairs: 22016586 Both Surviving: 15225767 (69.16%) Forward Only Surviving: 6575039 (29.86%) Reverse Only Surviving: 113686 (0.52%) Dropped: 102094 (0.46%)
+Input Read Pairs: 22016586 Both Surviving: 21733022 (98.71%) Forward Only Surviving: 160853 (0.73%) Reverse Only Surviving: 77221 (0.35%) Dropped: 45490 (0.21%)
 CSR2019-0389
-Input Read Pairs: 20086905 Both Surviving: 13920957 (69.30%) Forward Only Surviving: 5957308 (29.66%) Reverse Only Surviving: 111925 (0.56%) Dropped: 96715 (0.48%)
+Input Read Pairs: 20086905 Both Surviving: 19839482 (98.77%) Forward Only Surviving: 141711 (0.71%) Reverse Only Surviving: 75582 (0.38%) Dropped: 30130 (0.15%)
 CSR2019-0392
-Input Read Pairs: 21447903 Both Surviving: 15323053 (71.44%) Forward Only Surviving: 5927656 (27.64%) Reverse Only Surviving: 106748 (0.50%) Dropped: 90446 (0.42%)
+Input Read Pairs: 21447903 Both Surviving: 21213175 (98.91%) Forward Only Surviving: 152411 (0.71%) Reverse Only Surviving: 60483 (0.28%) Dropped: 21834 (0.10%)
 CSR2019-0398
-Input Read Pairs: 21412763 Both Surviving: 15160418 (70.80%) Forward Only Surviving: 6036275 (28.19%) Reverse Only Surviving: 116873 (0.55%) Dropped: 99197 (0.46%)
+Input Read Pairs: 21412763 Both Surviving: 21183988 (98.93%) Forward Only Surviving: 146680 (0.69%) Reverse Only Surviving: 60857 (0.28%) Dropped: 21238 (0.10%)
 CSR2019-0401
-Input Read Pairs: 20705443 Both Surviving: 14740431 (71.19%) Forward Only Surviving: 5769699 (27.87%) Reverse Only Surviving: 105376 (0.51%) Dropped: 89937 (0.43%)
+Input Read Pairs: 20705443 Both Surviving: 20491410 (98.97%) Forward Only Surviving: 145822 (0.70%) Reverse Only Surviving: 50896 (0.25%) Dropped: 17315 (0.08%)
 CSR2019-0407
-Input Read Pairs: 17449201 Both Surviving: 12316593 (70.59%) Forward Only Surviving: 4970187 (28.48%) Reverse Only Surviving: 88110 (0.50%) Dropped: 74311 (0.43%)
+Input Read Pairs: 17449201 Both Surviving: 17265459 (98.95%) Forward Only Surviving: 118227 (0.68%) Reverse Only Surviving: 43490 (0.25%) Dropped: 22025 (0.13%)
 CSR2019-0416
-Input Read Pairs: 19577570 Both Surviving: 13870492 (70.85%) Forward Only Surviving: 5519077 (28.19%) Reverse Only Surviving: 101797 (0.52%) Dropped: 86204 (0.44%)
+Input Read Pairs: 19577570 Both Surviving: 19365110 (98.91%) Forward Only Surviving: 135648 (0.69%) Reverse Only Surviving: 52616 (0.27%) Dropped: 24196 (0.12%)
 CSR2019-0709
-Input Read Pairs: 19486904 Both Surviving: 13507581 (69.32%) Forward Only Surviving: 5781057 (29.67%) Reverse Only Surviving: 106517 (0.55%) Dropped: 91749 (0.47%)
+Input Read Pairs: 19486904 Both Surviving: 19232574 (98.69%) Forward Only Surviving: 139065 (0.71%) Reverse Only Surviving: 83063 (0.43%) Dropped: 32202 (0.17%)
 CSR2019-0712
-Input Read Pairs: 21822713 Both Surviving: 14884662 (68.21%) Forward Only Surviving: 6737249 (30.87%) Reverse Only Surviving: 106052 (0.49%) Dropped: 94750 (0.43%)
+Input Read Pairs: 21822713 Both Surviving: 21576459 (98.87%) Forward Only Surviving: 138966 (0.64%) Reverse Only Surviving: 64642 (0.30%) Dropped: 42646 (0.20%)
 CSR2019-0718
-Input Read Pairs: 18849493 Both Surviving: 13245098 (70.27%) Forward Only Surviving: 5423525 (28.77%) Reverse Only Surviving: 99018 (0.53%) Dropped: 81852 (0.43%)
+Input Read Pairs: 18849493 Both Surviving: 18624381 (98.81%) Forward Only Surviving: 130796 (0.69%) Reverse Only Surviving: 56311 (0.30%) Dropped: 38005 (0.20%)
 CSR2019-0721
-Input Read Pairs: 22040449 Both Surviving: 15460420 (70.15%) Forward Only Surviving: 6376420 (28.93%) Reverse Only Surviving: 109510 (0.50%) Dropped: 94099 (0.43%)
+Input Read Pairs: 22040449 Both Surviving: 21776687 (98.80%) Forward Only Surviving: 144310 (0.65%) Reverse Only Surviving: 73845 (0.34%) Dropped: 45607 (0.21%)
 CSR2019-0821
-Input Read Pairs: 15619511 Both Surviving: 10729355 (68.69%) Forward Only Surviving: 4740681 (30.35%) Reverse Only Surviving: 81284 (0.52%) Dropped: 68191 (0.44%)
+Input Read Pairs: 15619511 Both Surviving: 15414612 (98.69%) Forward Only Surviving: 99120 (0.63%) Reverse Only Surviving: 65690 (0.42%) Dropped: 40089 (0.26%)
 CSR2019-0824
-Input Read Pairs: 24389926 Both Surviving: 16527676 (67.76%) Forward Only Surviving: 7634504 (31.30%) Reverse Only Surviving: 119639 (0.49%) Dropped: 108107 (0.44%)
+Input Read Pairs: 24389926 Both Surviving: 24064879 (98.67%) Forward Only Surviving: 158319 (0.65%) Reverse Only Surviving: 118351 (0.49%) Dropped: 48377 (0.20%)
 CSR2019-0830
-Input Read Pairs: 15059352 Both Surviving: 10395251 (69.03%) Forward Only Surviving: 4514869 (29.98%) Reverse Only Surviving: 79900 (0.53%) Dropped: 69332 (0.46%)
+Input Read Pairs: 15059352 Both Surviving: 14832927 (98.50%) Forward Only Surviving: 104577 (0.69%) Reverse Only Surviving: 70466 (0.47%) Dropped: 51382 (0.34%)
 CSR2019-0833
-Input Read Pairs: 22183777 Both Surviving: 14926674 (67.29%) Forward Only Surviving: 7055027 (31.80%) Reverse Only Surviving: 108778 (0.49%) Dropped: 93298 (0.42%)
+Input Read Pairs: 22183777 Both Surviving: 21928270 (98.85%) Forward Only Surviving: 133091 (0.60%) Reverse Only Surviving: 70819 (0.32%) Dropped: 51597 (0.23%)
 CSR2019-0839
-Input Read Pairs: 18817716 Both Surviving: 13081574 (69.52%) Forward Only Surviving: 5561849 (29.56%) Reverse Only Surviving: 94507 (0.50%) Dropped: 79786 (0.42%)
+Input Read Pairs: 18817716 Both Surviving: 18584698 (98.76%) Forward Only Surviving: 126056 (0.67%) Reverse Only Surviving: 74285 (0.39%) Dropped: 32677 (0.17%)
 CSR2019-0842
-Input Read Pairs: 16173956 Both Surviving: 10826004 (66.93%) Forward Only Surviving: 5201377 (32.16%) Reverse Only Surviving: 78915 (0.49%) Dropped: 67660 (0.42%)
+Input Read Pairs: 16173956 Both Surviving: 15995038 (98.89%) Forward Only Surviving: 91915 (0.57%) Reverse Only Surviving: 57412 (0.35%) Dropped: 29591 (0.18%)
 CSR2019-0848
-Input Read Pairs: 18037994 Both Surviving: 12760129 (70.74%) Forward Only Surviving: 5095674 (28.25%) Reverse Only Surviving: 101154 (0.56%) Dropped: 81037 (0.45%)
+Input Read Pairs: 18037994 Both Surviving: 17818915 (98.79%) Forward Only Surviving: 124281 (0.69%) Reverse Only Surviving: 63986 (0.35%) Dropped: 30812 (0.17%)
 CSR2019-0851
-Input Read Pairs: 19262342 Both Surviving: 13212653 (68.59%) Forward Only Surviving: 5874384 (30.50%) Reverse Only Surviving: 93473 (0.49%) Dropped: 81832 (0.42%)
+Input Read Pairs: 19262342 Both Surviving: 19043030 (98.86%) Forward Only Surviving: 123119 (0.64%) Reverse Only Surviving: 61449 (0.32%) Dropped: 34744 (0.18%)
 CSR2019-0857
-Input Read Pairs: 17801574 Both Surviving: 12414514 (69.74%) Forward Only Surviving: 5221269 (29.33%) Reverse Only Surviving: 91783 (0.52%) Dropped: 74008 (0.42%)
+Input Read Pairs: 17801574 Both Surviving: 17630728 (99.04%) Forward Only Surviving: 107520 (0.60%) Reverse Only Surviving: 41907 (0.24%) Dropped: 21419 (0.12%)
 CSR2019-0860
-Input Read Pairs: 22456297 Both Surviving: 15516716 (69.10%) Forward Only Surviving: 6740755 (30.02%) Reverse Only Surviving: 108998 (0.49%) Dropped: 89828 (0.40%)
+Input Read Pairs: 22456297 Both Surviving: 22231641 (99.00%) Forward Only Surviving: 131690 (0.59%) Reverse Only Surviving: 67576 (0.30%) Dropped: 25390 (0.11%)
 CSR2019-0911
-Input Read Pairs: 18820880 Both Surviving: 13573665 (72.12%) Forward Only Surviving: 5071860 (26.95%) Reverse Only Surviving: 99011 (0.53%) Dropped: 76344 (0.41%)
+Input Read Pairs: 18820880 Both Surviving: 18626911 (98.97%) Forward Only Surviving: 116493 (0.62%) Reverse Only Surviving: 50578 (0.27%) Dropped: 26898 (0.14%)
 CSR2019-0914
-Input Read Pairs: 20569028 Both Surviving: 14436963 (70.19%) Forward Only Surviving: 5951724 (28.94%) Reverse Only Surviving: 97751 (0.48%) Dropped: 82590 (0.40%)
+Input Read Pairs: 20569028 Both Surviving: 20373895 (99.05%) Forward Only Surviving: 125449 (0.61%) Reverse Only Surviving: 50741 (0.25%) Dropped: 18943 (0.09%)
 CSR2019-0920
-Input Read Pairs: 20360863 Both Surviving: 14145252 (69.47%) Forward Only Surviving: 6015337 (29.54%) Reverse Only Surviving: 109831 (0.54%) Dropped: 90443 (0.44%)
+Input Read Pairs: 20360863 Both Surviving: 20065421 (98.55%) Forward Only Surviving: 129931 (0.64%) Reverse Only Surviving: 114491 (0.56%) Dropped: 51020 (0.25%)
 CSR2019-0923
-Input Read Pairs: 21222256 Both Surviving: 14578348 (68.69%) Forward Only Surviving: 6435293 (30.32%) Reverse Only Surviving: 104367 (0.49%) Dropped: 104248 (0.49%)
+Input Read Pairs: 21222256 Both Surviving: 20978265 (98.85%) Forward Only Surviving: 172315 (0.81%) Reverse Only Surviving: 49768 (0.23%) Dropped: 21908 (0.10%)
