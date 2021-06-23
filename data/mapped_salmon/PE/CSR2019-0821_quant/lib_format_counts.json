@@ -1,0 +1,22 @@
+{
+    "read_files": "[ data/qc/CSR2019-0821_O1_paired.fastq.gz, data/qc/CSR2019-0821_O2_paired.fastq.gz]",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 1.0,
+    "num_compatible_fragments": 13926169,
+    "num_assigned_fragments": 13926169,
+    "num_frags_with_concordant_consistent_mappings": 13981606,
+    "num_frags_with_inconsistent_or_orphan_mappings": 142679,
+    "strand_mapping_bias": 0.5013508462475627,
+    "MSF": 0,
+    "OSF": 0,
+    "ISF": 7009690,
+    "MSR": 0,
+    "OSR": 0,
+    "ISR": 6971916,
+    "SF": 47583,
+    "SR": 95096,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}
