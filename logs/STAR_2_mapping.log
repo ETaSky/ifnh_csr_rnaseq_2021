@@ -1,7 +1,0 @@
-	STAR --runThreadN 24 --genomeDir data/reference/STAR_genome_ind --readFilesManifest data/STAR_filemanifest.tsv --readFilesCommand pigz -dc --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --chimSegmentMin 30 --outSAMtype BAM Unsorted --outSAMunmapped Within --outSAMattributes NH HI AS nM NM MD jM jI MC ch RG --outFileNamePrefix data/mapped_STAR/ --limitBAMsortRAM 50000000000
-	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
-Jun 06 01:32:24 ..... started STAR run
-Jun 06 01:32:25 ..... loading genome
-Jun 06 01:32:45 ..... started mapping
-Jun 06 04:30:25 ..... finished mapping
-Jun 06 04:30:31 ..... finished successfully
