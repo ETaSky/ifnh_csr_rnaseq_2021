@@ -30,21 +30,20 @@ mt_raw <- read.table("../data/Metadata_RNAseq_06072021-jw.txt", header = T, sep 
 2. Salmon counts
 Here we are importing the count estimate output from Salmon.
 ```{r}
+library(tximeta)
 # PE
 dat_path = dir("../data/mapped_salmon/PE", pattern = "*_quant", full.names = T, recursive = F)
-sample_id = gsub("_quant", "", basename(dat_path))
+sample_id = gsub("_quant", "", basename(dat_path)) %>% gsub("-", "\\.", .)
 
-pe_ct_fls = lapply(dat_path, function(x){read.table(file = paste0(x, "/quant.sf"), header = T, sep = "\t") %>% filter(TPM>0)})
-names(pe_ct_fls) <- sample_id
+# create sample table/sample manifest
+coldata = data.frame(files = file.path(dat_path, "quant.sf"), names = sample_id) %>% merge(., mt_raw, by.x = "names", by.y = "TubeID", all.x = T)
 
-pe_ct_dat = data.table::rbindlist(pe_ct_fls, use.names = T, idcol = "sample.id")
-# fix sample id format
-pe_ct_dat$sample.id = gsub("-", "\\.", pe_ct_dat$sample.id)
+# setTximetaBFC(dir = ../trash)
+se = tximeta(coldata, type = "salmon")
 
-# some QC
-pe_ct_dat %>% distinct(Name, Length, EffectiveLength) %>% arrange(Name) %>% group_by(Name) %>% filter(n()>1) # this indicates that each transcript's effective length is calculated on per sample basis, in that a fragment length is estimated for each sample in PE run
+```
 
-pe_ct_dat %>% filter(sample.id == sample.id[1]) %>% mutate(Frg = Length-EffectiveLength)
+```{r}
 
 ```
 
