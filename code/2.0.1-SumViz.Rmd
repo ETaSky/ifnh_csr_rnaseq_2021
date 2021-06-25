@@ -17,6 +17,8 @@ renv::restore() # run every time when a different computer is used (practically 
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
+library(ggrepel)
+library(ComplexHeatmap)
 
 ```
 
@@ -42,8 +44,100 @@ coldata = data.frame(files = file.path(dat_path, "quant.sf"), names = sample_id)
 se = tximeta(coldata, type = "salmon")
 
 ```
+## Salmon output qc
+```{r}
+se_cts = assays(se)$counts
+se_cts_ = se_cts %>% as.data.frame() %>% pivot_longer(everything(), names_to = "sample_id", values_to = "cts") %>% rownames_to_column(var = "TransciptID") %>% filter(cts>0)
+specnumber(se_cts, MARGIN = 2)
+ggplot(se_cts_, aes(cts, color = sample_id)) +
+    geom_density(show.legend = F) +
+    scale_x_log10()
+
+se_tpms = assays(se)$abundance
+se_tpms_ = se_tpms %>% as.data.frame() %>% pivot_longer(everything(), names_to = "sample_id", values_to = "TPM") %>% rownames_to_column(var = "TransciptID") %>% filter(TPM>0)
+
+ggplot(se_tpms_, aes(TPM, color = sample_id)) +
+    geom_density(show.legend = F) +
+    scale_x_log10()
+```
+
+9. Misc
+```{r}
+BM_colors = c("#377EB8", "#4DAF4A", "#E41A1C", "purple")
+names(BM_colors) = c("VF", "CSR", "CS", "VD")
+```
+## Differntial abundance by DESeq2
 
 ```{r}
+library(DESeq2)
+library(apeglm)
 
+comp = c("VF", "CS") # comp[1] reference, comp[2] comparison group
+
+bodysites = c("Ileum", "Liver")
+
+out = list()
+for (ss in bodysites){
+    # ss = "Ileum"
+    # subset rangedSummarizedExperiment object
+    se_wk <- se[, se$BodySite==ss & se$BirthMode %in% comp]
+    # DESeq2 dataset
+    dds <- DESeqDataSet(se_wk, design = ~ BirthMode + Sex)
+    dds$BirthMode <- relevel(dds$BirthMode, ref = comp[1])
+    
+    # prefiltering to increase speed and save memory, more strict filtering is automatically applied later
+    keep <- rowSums(counts(dds)) >= 10 # genes with at least 10 reads across all samples
+    dds <- dds[keep, ]
+    dds <- estimateSizeFactors(dds)
+    
+    # running DE analysis
+    dds_run <- DESeq(dds)
+    res <- results(dds_run, contrast = c("BirthMode", comp[2], comp[1]), lfcThreshold = 1)
+    ##summary(res)
+    #cts_deseq = counts(dds, normalized = T)
+    
+    ## log fold change chrinkage (explanations see https://hbctraining.github.io/DGE_workshop/lessons/05_DGE_DESeq2_analysis2.html#:~:text=Shrunken%20log2%20foldchanges%20(LFC),High%20dispersion%20values)
+    resLFC <- lfcShrink(dds_run, coef = paste("BirthMode", comp[2], "vs", comp[1], sep = "_"), type = "apeglm", res = res)
+    
+    res_dat <- res %>% data.frame %>% mutate(padj = ifelse(is.na(padj), 1, padj), isDE = ifelse(padj<=0.1 & abs(log2FoldChange)>=1, "Yes", "No"))  # explanations of NA in padj can be found https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#pvaluesNA and https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#i-want-to-benchmark-deseq2-comparing-to-other-de-tools.
+
+    # Heatmap
+    vsd <- vst(dds, blind = T)
+    mat <- se_wk_tpm[rownames(res_dat)[res_dat$isDE=="Yes"],]
+    
+    se_wk_tpm <- assays(se_wk)$abundance # Get TPM for each gene in each sample
+    se_wk_tpm_sig <- se_wk_tpm[rownames(res_dat)[res_dat$isDE=="Yes"], ]
+    se_wk_tpm_sig_log = log10(se_wk_tpm_sig)
+    
+    ## annotation component
+    mat_col_fun = circlize::colorRamp2(c(-2,  0, 2), c("blue", "white", "red"))
+    ### dataframe for the column annotation
+    #coldata
+    column_ha = HeatmapAnnotation(
+        df = colData(se_wk)[, c("BirthMode", "Sex")], 
+        col = list(BirthMode = BM_colors, Sex = c("M" = "#fc8d62", "F" = "#66c2a5")),
+        annotation_name_gp = gpar(fontface = "bold"),
+        annotation_name_side = "left")
+    # ### dataframe for row annotation
+    # rowdata = cts_sig %>% group_by(Geneid, gene_name) %>% summarise(a_tpm = sum(tpm)/ncol(cts_sig_mat))
+    # row_labels = structure(rowdata$gene_name, names = rowdata$Geneid)
+    # row_ha = rowAnnotation(
+    #     a_tpm = rowSums(cts_sig_mat, na.rm = T)/ncol(cts_sig_mat), 
+    #     col = list(a_tpm = circlize::colorRamp2(seq(min(rowdata$a_tpm), max(rowdata$a_tpm), length.out = 7), hcl.colors(7, palette = "Oranges", rev = T))),
+    #     annotation_label = "Average TPM",
+    #     annotation_name_gp = gpar(fontface = "bold"),
+    #     annotation_name_side = "top")
+
+    Heatmap(mat, row_title = "Differential Genes",
+            
+            #col = mat_col_fun,
+            show_column_names = F,
+            show_row_names = F, 
+            #row_labels = row_labels[rownames(cts_sig_mat_log)],
+            top_annotation = column_ha)
+            #right_annotation = row_ha)
+    
+    out[[ss]] = list(DESeq_run = dds_run, DESeq_norm = cts_deseq, Data_sig = cts_sig, volcano = p_vol, heatmap = p_heat)
+}
 ```
 
